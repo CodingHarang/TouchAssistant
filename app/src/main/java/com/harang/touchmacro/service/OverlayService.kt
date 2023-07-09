@@ -50,7 +50,6 @@ class OverlayService : Service() {
         lifecycleOwner = MyLifecycleOwner()
         showOverlay(
             stopSelf = {
-                composeView.content
                 lifecycleOwner.setCurrentState(Lifecycle.State.DESTROYED)
                 stopSelf()
             }

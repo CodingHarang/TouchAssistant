@@ -60,6 +60,8 @@ fun OverlayScreen(
     val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
     val interactions = remember { mutableStateListOf<Interaction>() }
+    val accessibilityManager: AccessibilityManager =
+        context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
 
     LaunchedEffect(true) {
         interactionSource.interactions.collect { interaction ->
@@ -218,14 +220,13 @@ fun OverlayScreen(
                 )
                 .clickable {
                     Log.e("GreenButton", "green button clicked")
-                    val accessibilityManager: AccessibilityManager =
-                        context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-                    if (accessibilityManager.isEnabled) {
-                        val event: AccessibilityEvent = AccessibilityEvent.obtain()
-                        event.eventType = AccessibilityEvent.TYPE_VIEW_CLICKED
-                        event.className = Button::class.java.name
-                        accessibilityManager.sendAccessibilityEvent(event)
-                    }
+                    Log.e("GreenButton", "${accessibilityManager.isEnabled}")
+//                    if (accessibilityManager.isEnabled) {
+//                        val event: AccessibilityEvent = AccessibilityEvent.obtain()
+//                        event.eventType = AccessibilityEvent.TYPE_VIEW_CLICKED
+//                        event.className = Button::class.java.name
+//                        accessibilityManager.sendAccessibilityEvent(event)
+//                    }
                 },
             text = "Button"
         )

@@ -17,7 +17,7 @@ class MyAccessibilityService : AccessibilityService() {
             // what action to take
 
             // take action on behalf of the user
-            performAction(AccessibilityNodeInfo.ACTION_CLICK)
+//            performAction(AccessibilityNodeInfo.ACTION_CLICK)
 
             // recycle the nodeInfo object
             recycle()
