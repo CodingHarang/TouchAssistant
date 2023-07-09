@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TouchMacro</string>
+    <string name="accessibility_service_description">accessibility_service_description</string>
 </resources>

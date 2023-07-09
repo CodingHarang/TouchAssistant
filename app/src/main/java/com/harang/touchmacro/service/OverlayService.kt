@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.view.WindowManager
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.Lifecycle
@@ -20,34 +21,58 @@ class OverlayService : Service() {
 
     private val windowManager get() = getSystemService(WINDOW_SERVICE) as WindowManager
 
+    private val layoutFlag: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+//            WindowManager.LayoutParams.FIRST_SYSTEM_WINDOW + 26
+    } else {
+        WindowManager.LayoutParams.TYPE_PHONE
+    }
+
+    private val params = WindowManager.LayoutParams(
+        WindowManager.LayoutParams.WRAP_CONTENT,
+        WindowManager.LayoutParams.WRAP_CONTENT,
+        layoutFlag,
+        // WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE : 터치 이벤트를 받지 않는다.
+        // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
+        // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE : 포커스를 받지 않는다.
+        // PixelFormat.TRANSLUCENT : 투명하게 한다.
+        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        PixelFormat.TRANSLUCENT
+    )
+
+    private lateinit var composeView: ComposeView
+    private lateinit var lifecycleOwner: MyLifecycleOwner
+
     override fun onCreate() {
         super.onCreate()
 //        setTheme(R.style.ThemeOverlay_AppCompat_Light)
-        showOverlay()
+        composeView = ComposeView(this)
+        lifecycleOwner = MyLifecycleOwner()
+        showOverlay(
+            stopSelf = {
+                composeView.content
+                lifecycleOwner.setCurrentState(Lifecycle.State.DESTROYED)
+                stopSelf()
+            }
+        )
     }
 
-    private fun showOverlay() {
-        val layoutFlag: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        } else {
-            WindowManager.LayoutParams.TYPE_PHONE
-        }
+    fun changePosition(x: Int, y: Int) {
+        params.x += x
+        params.y += y
+        windowManager.updateViewLayout(composeView, params)
+    }
 
-        val params = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            layoutFlag,
-            // WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE : 터치 이벤트를 받지 않는다.
-            // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
-            // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE : 포커스를 받지 않는다.
-            // PixelFormat.TRANSLUCENT : 투명하게 한다.
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT
-        )
-
-        val composeView = ComposeView(this)
+    private fun showOverlay(
+        stopSelf: () -> Unit
+    ) {
         composeView.setContent {
-            OverlayScreen()
+            OverlayScreen(
+                changePosition = { x: Int, y: Int ->
+                    changePosition(x, y)
+                },
+                stopSelf = stopSelf
+            )
 //            Text(
 //                text = "Hello",
 //                color = Color.Black,
@@ -64,17 +89,21 @@ class OverlayService : Service() {
             override val viewModelStore: ViewModelStore
                 get() = viewModelStore
         }
-        val lifecycleOwner = MyLifecycleOwner()
         lifecycleOwner.performRestore(null)
         lifecycleOwner.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
         composeView.setViewTreeLifecycleOwner(lifecycleOwner)
         composeView.setViewTreeViewModelStoreOwner(viewModelStoreOwner)
         composeView.setViewTreeSavedStateRegistryOwner(lifecycleOwner)
-
         windowManager.addView(composeView, params)
     }
 
     override fun onBind(intent: Intent): IBinder? {
         return null
+    }
+
+    override fun onDestroy() {
+        Log.e("OverlayService", "onDestroy")
+//        composeView.viewtree
+        super.onDestroy()
     }
 }
