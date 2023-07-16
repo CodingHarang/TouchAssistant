@@ -26,8 +26,8 @@ class MyAccessibilityService : AccessibilityService() {
     private lateinit var lifecycleOwner: MyLifecycleOwner
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        Log.e("event", "${event}")
         event?.source?.apply {
-            Log.e("event", "${event.packageName}, ${event.text}")
             if (event.packageName == "com.harang.touchmacro") {
                 when (event.text.toString().replace("[", "").replace("]", "")) {
                     "Up" -> {
@@ -119,12 +119,12 @@ class MyAccessibilityService : AccessibilityService() {
 //        serviceInfo = info
         composeView = ComposeView(this)
         lifecycleOwner = MyLifecycleOwner()
-        showOverlay(
-            stopSelf = {
-                lifecycleOwner.setCurrentState(Lifecycle.State.DESTROYED)
-                stopSelf()
-            }
-        )
+//        showOverlay(
+//            stopSelf = {
+//                lifecycleOwner.setCurrentState(Lifecycle.State.DESTROYED)
+//                stopSelf()
+//            }
+//        )
 
     }
 

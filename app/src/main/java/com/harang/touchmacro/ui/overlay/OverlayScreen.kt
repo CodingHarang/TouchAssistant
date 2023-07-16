@@ -198,59 +198,6 @@ fun OverlayScreen(
                     }
                 )
             }
-//        Text(
-//            modifier = Modifier
-//                .clearAndSetSemantics {
-////                    this.contentDescription = accSkipPermission
-//                    liveRegion = LiveRegionMode.Polite
-//                }
-//                .width(50.dp)
-//                .height(50.dp)
-//                .clip(
-//                    shape = RoundedCornerShape(8.dp)
-//                )
-//                .background(
-//                    color = Color(0xff00ff00),
-//                    shape = RoundedCornerShape(8.dp)
-//                )
-//                .clickable {
-//                    Log.e("GreenButton", "green button clicked")
-//                    val accessibilityManager: AccessibilityManager =
-//                        context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-//                    Log.e("GreenButton", "${accessibilityManager.isEnabled}")
-//                    if (accessibilityManager.isEnabled) {
-//                        val event: AccessibilityEvent = AccessibilityEvent.obtain()
-//                        event.eventType = AccessibilityEvent.TYPE_VIEW_CLICKED
-//                        event.className = Button::class.java.name
-//                        accessibilityManager.sendAccessibilityEvent(event)
-//                    }
-////                    val swipePath: Path = Path()
-////                    swipePath.moveTo(1000f, 1000f)
-////                    swipePath.lineTo(100f, 1000f)
-////                    val gestureBuilder = GestureDescription.Builder()
-////                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 500))
-////                    AccessibilityService.dispatchGesture(gestureBuilder.build(), null, null)
-//                    swipe()
-//                },
-//            text = "Button"
-//        )
-//        Text(
-//            modifier = Modifier
-//                .width(50.dp)
-//                .height(50.dp)
-//                .clip(
-//                    shape = RoundedCornerShape(8.dp)
-//                )
-//                .background(
-//                    color = Color(0xff00ff00),
-//                    shape = RoundedCornerShape(8.dp)
-//                )
-//                .clickable {
-//                    stopSelf()
-//                    context.stopService(Intent(context, OverlayService::class.java))
-//                },
-//            text = "Stop"
-//        )
             Box(
                 modifier = Modifier
                     .width(100.dp)
