@@ -7,7 +7,13 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import android.view.WindowManager
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -70,6 +76,7 @@ class OverlayService : Service() {
                 changePosition = { x: Int, y: Int ->
                     changePosition(x, y)
                 },
+                swipe = {},
                 stopSelf = stopSelf
             )
 //            Text(

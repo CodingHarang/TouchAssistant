@@ -1,6 +1,9 @@
 package com.harang.touchmacro
 
+import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
+import android.view.Display
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -18,6 +21,12 @@ import com.harang.touchmacro.ui.theme.TouchMacroTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val display: Display = windowManager.defaultDisplay
+        val size: Point = Point()
+        display.getSize(size)
+        val width: Int = size.x
+        val height: Int = size.y
+        Log.e("MainActivity", "width: $width, height: $height")
         setContent {
             TouchMacroTheme {
                 // A surface container using the 'background' color from the theme
