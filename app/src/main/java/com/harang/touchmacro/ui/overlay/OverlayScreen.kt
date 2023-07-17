@@ -34,20 +34,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import android.graphics.Path
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Button
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.harang.touchmacro.service.OverlayService
 import com.harang.touchmacro.view.CustomView
@@ -55,7 +60,9 @@ import com.harang.touchmacro.view.DownButton
 import com.harang.touchmacro.view.LeftButton
 import com.harang.touchmacro.view.RightButton
 import com.harang.touchmacro.view.UpButton
+import com.harang.touchmacro.vo.GlobalObject
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
@@ -63,9 +70,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun OverlayScreen(
     changePosition: (Int, Int) -> Unit,
+    updateIsFullScreen: (Boolean) -> Unit,
     swipe: () -> Unit,
     stopSelf: () -> Unit
 ) {
+    val isFullScreen = remember { mutableStateOf(GlobalObject.isFullScreenShowing) }
+    val view = LocalView.current
+    val accessibilityManager = view.context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
     val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
     val isCanvasShowing = remember { mutableStateOf(false) }
@@ -85,7 +96,6 @@ fun OverlayScreen(
         }
     }
     val coroutineScope = rememberCoroutineScope()
-    val coroutineScope2 = rememberCoroutineScope()
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
     val modifier = Modifier
@@ -139,170 +149,135 @@ fun OverlayScreen(
             modifier = modifier
         ) {
             Row() {
-                AndroidView(
+                Box(
                     modifier = Modifier
-                        .width(IntrinsicSize.Min)
-                        .height(IntrinsicSize.Min),
-                    factory = { context ->
-                        UpButton(context).apply {
-                            setOnClickListener {view ->
-                                Log.e("UpButton", "UpButton clicked")
+                        .width(100.dp)
+                        .height(100.dp)
+                        .background(
+                            color = Color(0xffEF9A9A)
+                        )
+                        .clickable {
+                            if (accessibilityManager.isEnabled) {
+                                val event =
+                                    AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
+                                event.text.add("Up")
+                                accessibilityManager.sendAccessibilityEvent(event)
                             }
-                        }
-                    },
-                    update = { view ->
-                    }
-                )
-                AndroidView(
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Up",
+                        fontSize = 30.sp
+                    )
+                }
+                Box(
                     modifier = Modifier
-                        .width(IntrinsicSize.Min)
-                        .height(IntrinsicSize.Min),
-                    factory = { context ->
-                        DownButton(context).apply {
-                            setOnClickListener {view ->
-                                Log.e("DownButton", "DownButton clicked")
+                        .width(100.dp)
+                        .height(100.dp)
+                        .background(
+                            color = Color(0xffCE93D8)
+                        )
+                        .clickable {
+                            if (accessibilityManager.isEnabled) {
+                                val event =
+                                    AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
+                                event.text.add("Down")
+                                accessibilityManager.sendAccessibilityEvent(event)
                             }
-                        }
-                    },
-                    update = { view ->
-                    }
-                )
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Down",
+                        fontSize = 30.sp
+                    )
+                }
             }
             Row() {
-                AndroidView(
+                Box(
                     modifier = Modifier
-                        .width(IntrinsicSize.Min)
-                        .height(IntrinsicSize.Min),
-                    factory = { context ->
-                        LeftButton(context).apply {
-                            setOnClickListener {view ->
-                                Log.e("LeftButton", "LeftButton clicked")
+                        .width(100.dp)
+                        .height(100.dp)
+                        .background(
+                            color = Color(0xff9FA8DA)
+                        )
+                        .clickable {
+                            if (accessibilityManager.isEnabled) {
+                                val event =
+                                    AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
+                                event.text.add("Left")
+                                accessibilityManager.sendAccessibilityEvent(event)
                             }
-                        }
-                    },
-                    update = { view ->
-                    }
-                )
-                AndroidView(
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Left",
+                        fontSize = 30.sp
+                    )
+                }
+                Box(
                     modifier = Modifier
-                        .width(IntrinsicSize.Min)
-                        .height(IntrinsicSize.Min),
-                    factory = { context ->
-                        RightButton(context).apply {
-                            setOnClickListener {view ->
-                                Log.e("RightButton", "RightButton clicked")
+                        .width(100.dp)
+                        .height(100.dp)
+                        .background(
+                            color = Color(0xff81D4FA)
+                        )
+                        .clickable {
+                            if (accessibilityManager.isEnabled) {
+                                val event =
+                                    AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
+                                event.text.add("Right")
+                                accessibilityManager.sendAccessibilityEvent(event)
                             }
-                        }
-                    },
-                    update = { view ->
-                    }
-                )
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Right",
+                        fontSize = 30.sp
+                    )
+                }
             }
             Box(
                 modifier = Modifier
-                    .width(100.dp)
+                    .width(200.dp)
                     .height(100.dp)
                     .background(
-                        color = when(isCanvasShowing.value) {
-                            true -> Color(0x55009688)
-                            false -> Color(0xffFFC107)
-                        }
+                        color = Color(0xff80CBC4)
                     )
                     .clickable {
-                        Log.e("Canvas", "Canvas clicked")
-                        Log.e("prevValue", isCanvasShowing.value.toString())
-                        isCanvasShowing.value = !isCanvasShowing.value
-                        Log.e("postValue", isCanvasShowing.value.toString())
+                        if (GlobalObject.isFullScreenShowing) {
+                            GlobalObject.isFullScreenShowing = false
+                            updateIsFullScreen(GlobalObject.isFullScreenShowing)
+                        } else {
+                            GlobalObject.isFullScreenShowing = true
+                            updateIsFullScreen(GlobalObject.isFullScreenShowing)
+                        }
+                        isFullScreen.value = GlobalObject.isFullScreenShowing
+                        Log.e(
+                            "GlobalObject.isFullScreenShowing",
+                            GlobalObject.isFullScreenShowing.toString()
+                        )
                     }
-            )
+            ) {
+                Text(
+                    text = "FullScreen",
+                    fontSize = 30.sp
+                )
+            }
         }
     }
-    if (isCanvasShowing.value) {
+    if (isFullScreen.value) {
+        Log.e("isFullScreenShowing", GlobalObject.isFullScreenShowing.toString())
         Box(
             modifier = Modifier
-                .width(1000.dp)
-                .height(1000.dp)
+                .fillMaxSize()
+//                .offset(x = 0.dp, y = 100.dp)
                 .background(
                     color = Color(0x55F50057)
                 ),
         )
     }
 }
-
-
-//AndroidView(
-//modifier = Modifier
-//.width(IntrinsicSize.Min)
-//.height(IntrinsicSize.Min),
-//factory = { context ->
-//    // Creates view
-//    CustomView(context).apply {
-//        // Sets up listeners for View -> Compose communication
-//        setOnTouchListener { view, motionEvent ->
-//            Log.e("CustomView", "View touched, ${view.width}, ${view.height}, $motionEvent")
-//            coroutineScope2.launch {
-//                delay(1000)
-////                                view.dispatchTouchEvent(
-////                                        MotionEvent.obtain(
-////                                            SystemClock.uptimeMillis(),
-////                                            SystemClock.uptimeMillis(),
-////                                            MotionEvent.ACTION_DOWN,
-////                                            800f,
-////                                            800f,
-////                                            0
-////                                        )
-////                                        )
-////                                view.dispatchTouchEvent(
-////                                    MotionEvent.obtain(
-////                                        SystemClock.uptimeMillis(),
-////                                        SystemClock.uptimeMillis(),
-////                                        MotionEvent.ACTION_UP,
-////                                        800f,
-////                                        800f,
-////                                        0
-////                                    )
-////                                )
-//            }
-//            false
-//        }
-//        setOnClickListener {view ->
-////                            view.dispatchTouchEvent(
-////                                MotionEvent.obtain(
-////                                    SystemClock.uptimeMillis(),
-////                                    SystemClock.uptimeMillis(),
-////                                    MotionEvent.ACTION_DOWN,
-////                                    -100f,
-////                                    100f,
-////                                    0
-////                                )
-////                            )
-////                            view.dispatchTouchEvent(
-////                                MotionEvent.obtain(
-////                                    SystemClock.uptimeMillis(),
-////                                    SystemClock.uptimeMillis(),
-////                                    MotionEvent.ACTION_UP,
-////                                    100f,
-////                                    100f,
-////                                    0
-////                                )
-////                            )
-////                            coroutineScope2.launch {
-////                                while(true) {
-////                                    delay(1000)
-////
-////                                }
-////                            }
-//            Log.e("CustomView", "View clicked")
-//        }
-//    }
-//},
-//update = { view ->
-//    // View's been inflated or state read in this block has been updated
-//    // Add logic here if necessary
-//
-//    // As selectedItem is read here, AndroidView will recompose
-//    // whenever the state changes
-//    // Example of Compose -> View communication
-//    Log.e("CustomView", "View updated")
-//}
-//)

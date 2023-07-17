@@ -8,8 +8,10 @@ import android.graphics.Path
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelStore
@@ -18,70 +20,14 @@ import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.harang.touchmacro.ui.overlay.OverlayScreen
+import com.harang.touchmacro.vo.GlobalObject
 
 
 class MyAccessibilityService : AccessibilityService() {
 
     private lateinit var composeView: ComposeView
     private lateinit var lifecycleOwner: MyLifecycleOwner
-
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        Log.e("event", "${event}")
-        event?.source?.apply {
-            if (event.packageName == "com.harang.touchmacro") {
-                when (event.text.toString().replace("[", "").replace("]", "")) {
-                    "Up" -> {
-                        Log.e("up", "up")
-                        val swipePath = Path()
-                        swipePath.moveTo(640f, 500f)
-                        swipePath.lineTo(640f, 1500f)
-                        val gestureBuilder = GestureDescription.Builder()
-                        gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
-                        dispatchGesture(gestureBuilder.build(), null, null)
-
-                    }
-                    "Down" -> {
-                        Log.e("down", "down")
-                        val swipePath = Path()
-                        swipePath.moveTo(540f, 1500f)
-                        swipePath.lineTo(540f, 500f)
-                        val gestureBuilder = GestureDescription.Builder()
-                        gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
-                        dispatchGesture(gestureBuilder.build(), null, null)
-                    }
-                    "Left" -> {
-                        Log.e("left", "left")
-                        val swipePath = Path()
-                        swipePath.moveTo(10f, 900f)
-                        swipePath.lineTo(1070f, 900f)
-                        val gestureBuilder = GestureDescription.Builder()
-                        gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
-                        dispatchGesture(gestureBuilder.build(), null, null)
-                    }
-                    "Right" -> {
-                        Log.e("right", "right")
-                        val swipePath = Path()
-                        swipePath.moveTo(1070f, 1000f)
-                        swipePath.lineTo(10f, 1000f)
-                        val gestureBuilder = GestureDescription.Builder()
-                        gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
-                        dispatchGesture(gestureBuilder.build(), null, null)
-                    }
-                }
-            }
-            // Use the event and node information to determine
-            // what action to take
-
-            // take action on behalf of the user
-//            performAction(AccessibilityNodeInfo.ACTION_CLICK)
-
-            // recycle the nodeInfo object
-            recycle()
-        }
-    }
-
     private val windowManager get() = getSystemService(WINDOW_SERVICE) as WindowManager
-
     private val layoutFlag: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
 //            WindowManager.LayoutParams.FIRST_SYSTEM_WINDOW + 26
@@ -89,7 +35,7 @@ class MyAccessibilityService : AccessibilityService() {
         WindowManager.LayoutParams.TYPE_PHONE
     }
 
-    private val params = WindowManager.LayoutParams(
+    private val params1 = WindowManager.LayoutParams(
         WindowManager.LayoutParams.WRAP_CONTENT,
         WindowManager.LayoutParams.WRAP_CONTENT,
         layoutFlag,
@@ -101,34 +47,96 @@ class MyAccessibilityService : AccessibilityService() {
         PixelFormat.TRANSLUCENT
     )
 
-    fun changePosition(x: Int, y: Int) {
-        params.x += x
-        params.y += y
-        windowManager.updateViewLayout(composeView, params)
+    private val params2 = WindowManager.LayoutParams(
+        WindowManager.LayoutParams.MATCH_PARENT,
+        WindowManager.LayoutParams.MATCH_PARENT,
+        layoutFlag,
+        // WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE : 터치 이벤트를 받지 않는다.
+        // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
+        // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE : 포커스를 받지 않는다.
+        // PixelFormat.TRANSLUCENT : 투명하게 한다.
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        or WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        PixelFormat.TRANSLUCENT
+    )
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        Log.e("event", "${event}\n${event?.text}\n${event?.text.toString().replace("[", "").replace("]", "")}")
+        if (event != null) {
+            Log.e("eventNotNull", "eventNotNull\npackageName = ${event.packageName}")
+            when (event.text.toString().replace("[", "").replace("]", "")) {
+                "Up" -> {
+                    Log.e("up", "up")
+                    val swipePath = Path()
+                    swipePath.moveTo(640f, 500f)
+                    swipePath.lineTo(640f, 1500f)
+                    val gestureBuilder = GestureDescription.Builder()
+                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
+                    dispatchGesture(gestureBuilder.build(), null, null)
+                }
+
+                "Down" -> {
+                    Log.e("down", "down")
+                    val swipePath = Path()
+                    swipePath.moveTo(540f, 1500f)
+                    swipePath.lineTo(540f, 500f)
+                    val gestureBuilder = GestureDescription.Builder()
+                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
+                    dispatchGesture(gestureBuilder.build(), null, null)
+                }
+
+                "Left" -> {
+                    Log.e("left", "left")
+                    val swipePath = Path()
+                    swipePath.moveTo(10f, 900f)
+                    swipePath.lineTo(1070f, 900f)
+                    val gestureBuilder = GestureDescription.Builder()
+                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
+                    dispatchGesture(gestureBuilder.build(), null, null)
+                }
+
+                "Right" -> {
+                    Log.e("right", "right")
+                    val swipePath = Path()
+                    swipePath.moveTo(1070f, 1000f)
+                    swipePath.lineTo(10f, 1000f)
+                    val gestureBuilder = GestureDescription.Builder()
+                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
+                    dispatchGesture(gestureBuilder.build(), null, null)
+                }
+            }
+        }
+    }
+
+    private fun changePosition(x: Int, y: Int) {
+        if (!GlobalObject.isFullScreenShowing) {
+            params1.x += x
+            params1.y += y
+            windowManager.updateViewLayout(composeView, params1)
+        }
+    }
+
+    private fun updateIsFullScreen(isFull: Boolean) {
+        if (isFull) {
+            params2.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            windowManager.updateViewLayout(composeView, params2)
+        } else {
+            windowManager.updateViewLayout(composeView, params1)
+        }
     }
 
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.e("onServiceConnected", "onServiceConnected")
-//        val info = AccessibilityServiceInfo()
-//        info.eventTypes = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED
-//        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK
-//        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_ALL_MASK
-//        info.notificationTimeout = 100
-//        info.packageNames = null
-//        serviceInfo = info
         composeView = ComposeView(this)
         lifecycleOwner = MyLifecycleOwner()
-//        showOverlay(
-//            stopSelf = {
-//                lifecycleOwner.setCurrentState(Lifecycle.State.DESTROYED)
-//                stopSelf()
-//            }
-//        )
-
+        showOverlay(
+            stopSelf = {
+                lifecycleOwner.setCurrentState(Lifecycle.State.DESTROYED)
+                stopSelf()
+            }
+        )
     }
-
-
 
     private fun showOverlay(
         stopSelf: () -> Unit
@@ -137,6 +145,9 @@ class MyAccessibilityService : AccessibilityService() {
             OverlayScreen(
                 changePosition = { x: Int, y: Int ->
                     changePosition(x, y)
+                },
+                updateIsFullScreen = {
+                    updateIsFullScreen(it)
                 },
                 swipe = {
                     Log.e("swipe", "swipe")
@@ -163,7 +174,7 @@ class MyAccessibilityService : AccessibilityService() {
         composeView.setViewTreeLifecycleOwner(lifecycleOwner)
 //        composeView.setViewTreeViewModelStoreOwner(viewModelStoreOwner)
         composeView.setViewTreeSavedStateRegistryOwner(lifecycleOwner)
-        windowManager.addView(composeView, params)
+        windowManager.addView(composeView, params1)
     }
 
     override fun onInterrupt() {

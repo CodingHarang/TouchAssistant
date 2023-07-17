@@ -72,13 +72,13 @@ class OverlayService : Service() {
         stopSelf: () -> Unit
     ) {
         composeView.setContent {
-            OverlayScreen(
-                changePosition = { x: Int, y: Int ->
-                    changePosition(x, y)
-                },
-                swipe = {},
-                stopSelf = stopSelf
-            )
+//            OverlayScreen(
+//                changePosition = { x: Int, y: Int ->
+//                    changePosition(x, y)
+//                },
+//                swipe = {},
+//                stopSelf = stopSelf
+//            )
 //            Text(
 //                text = "Hello",
 //                color = Color.Black,
