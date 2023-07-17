@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
         display.getSize(size)
         val width: Int = size.x
         val height: Int = size.y
+        window
         Log.e("MainActivity", "width: $width, height: $height")
         setContent {
             TouchMacroTheme {

@@ -43,7 +43,7 @@ class MyAccessibilityService : AccessibilityService() {
         // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
         // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE : 포커스를 받지 않는다.
         // PixelFormat.TRANSLUCENT : 투명하게 한다.
-        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
         PixelFormat.TRANSLUCENT
     )
 
@@ -55,8 +55,7 @@ class MyAccessibilityService : AccessibilityService() {
         // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
         // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE : 포커스를 받지 않는다.
         // PixelFormat.TRANSLUCENT : 투명하게 한다.
-        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-        or WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
         PixelFormat.TRANSLUCENT
     )
 
@@ -118,7 +117,7 @@ class MyAccessibilityService : AccessibilityService() {
 
     private fun updateIsFullScreen(isFull: Boolean) {
         if (isFull) {
-            params2.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//            params2.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             windowManager.updateViewLayout(composeView, params2)
         } else {
             windowManager.updateViewLayout(composeView, params1)

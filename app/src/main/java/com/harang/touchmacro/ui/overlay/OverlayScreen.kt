@@ -34,6 +34,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import android.graphics.Path
+import android.os.Build
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Button
@@ -78,6 +80,9 @@ fun OverlayScreen(
     val view = LocalView.current
     val accessibilityManager = view.context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
     val context = LocalContext.current
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        view.windowInsetsController?.hide(WindowInsets.Type.statusBars())
+    }
     val interactionSource = remember { MutableInteractionSource() }
     val isCanvasShowing = remember { mutableStateOf(false) }
     LaunchedEffect(true) {
