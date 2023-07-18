@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
@@ -19,8 +20,13 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.harang.touchmacro.provider.SharedPreferencesManager
 import com.harang.touchmacro.ui.overlay.OverlayScreen
 import com.harang.touchmacro.vo.GlobalObject
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.newSingleThreadContext
+import java.util.concurrent.TimeUnit
 
 
 class MyAccessibilityService : AccessibilityService() {
@@ -29,7 +35,7 @@ class MyAccessibilityService : AccessibilityService() {
     private lateinit var lifecycleOwner: MyLifecycleOwner
     private val windowManager get() = getSystemService(WINDOW_SERVICE) as WindowManager
     private val layoutFlag: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
 //            WindowManager.LayoutParams.FIRST_SYSTEM_WINDOW + 26
     } else {
         WindowManager.LayoutParams.TYPE_PHONE
@@ -43,22 +49,24 @@ class MyAccessibilityService : AccessibilityService() {
         // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
         // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE : 포커스를 받지 않는다.
         // PixelFormat.TRANSLUCENT : 투명하게 한다.
-        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                or WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS,
         PixelFormat.TRANSLUCENT
     )
 
     private val params2 = WindowManager.LayoutParams(
-        WindowManager.LayoutParams.WRAP_CONTENT,
-        WindowManager.LayoutParams.WRAP_CONTENT,
+        SharedPreferencesManager.getInt("screen_width") / 2,
+        SharedPreferencesManager.getInt("screen_height"),
         layoutFlag,
         // WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE : 터치 이벤트를 받지 않는다.
         // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
         // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE : 포커스를 받지 않는다.
         // PixelFormat.TRANSLUCENT : 투명하게 한다.
-        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
         PixelFormat.TRANSLUCENT
     )
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         Log.e("event", "${event}\n${event?.text}\n${event?.text.toString().replace("[", "").replace("]", "")}")
         if (event != null) {
@@ -67,11 +75,24 @@ class MyAccessibilityService : AccessibilityService() {
                 "Up" -> {
                     Log.e("up", "up")
                     val swipePath = Path()
-                    swipePath.moveTo(640f, 500f)
-                    swipePath.lineTo(640f, 1500f)
-                    val gestureBuilder = GestureDescription.Builder()
-                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
-                    dispatchGesture(gestureBuilder.build(), null, null)
+                    val executor = newSingleThreadContext("executor")
+                    executor.executor.execute() {
+                        for (i in 1..100) {
+
+                            TimeUnit.MILLISECONDS.sleep(100)
+                            swipePath.moveTo(640f, 500f)
+                            swipePath.lineTo(640f, 500f)
+                            val gestureBuilder = GestureDescription.Builder()
+                            gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 50))
+                            dispatchGesture(gestureBuilder.build(), null, null)
+                        }
+
+                    }
+//                    swipePath.moveTo(640f, 500f)
+//                    swipePath.lineTo(640f, 500f)
+//                    val gestureBuilder = GestureDescription.Builder()
+//                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 1000))
+//                    dispatchGesture(gestureBuilder.build(), null, null)
                 }
 
                 "Down" -> {
@@ -80,7 +101,7 @@ class MyAccessibilityService : AccessibilityService() {
                     swipePath.moveTo(540f, 1500f)
                     swipePath.lineTo(540f, 500f)
                     val gestureBuilder = GestureDescription.Builder()
-                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
+                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 1000))
                     dispatchGesture(gestureBuilder.build(), null, null)
                 }
 
@@ -90,7 +111,7 @@ class MyAccessibilityService : AccessibilityService() {
                     swipePath.moveTo(10f, 900f)
                     swipePath.lineTo(1070f, 900f)
                     val gestureBuilder = GestureDescription.Builder()
-                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
+                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 1000))
                     dispatchGesture(gestureBuilder.build(), null, null)
                 }
 
@@ -100,7 +121,7 @@ class MyAccessibilityService : AccessibilityService() {
                     swipePath.moveTo(1070f, 1000f)
                     swipePath.lineTo(10f, 1000f)
                     val gestureBuilder = GestureDescription.Builder()
-                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 5000))
+                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 1000))
                     dispatchGesture(gestureBuilder.build(), null, null)
                 }
             }
@@ -117,7 +138,9 @@ class MyAccessibilityService : AccessibilityService() {
 
     private fun updateIsFullScreen(isFull: Boolean) {
         if (isFull) {
-//            params2.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            params2.x = 0
+            params2.y = SharedPreferencesManager.getInt("status_bar_height")
+            params2.gravity = Gravity.START
             windowManager.updateViewLayout(composeView, params2)
         } else {
             windowManager.updateViewLayout(composeView, params1)

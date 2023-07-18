@@ -39,6 +39,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Button
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -278,9 +279,39 @@ fun OverlayScreen(
         Log.e("isFullScreenShowing", GlobalObject.isFullScreenShowing.toString())
         Box(
             modifier = Modifier
-                .width(1000.dp)
-                .height(1000.dp)
-                .offset(x = 0.dp, y = 100.dp)
+                .fillMaxSize()
+                .pointerInput(true) {
+                    detectTapGestures(
+                        onTap = {
+                            Log.e("tap", "x: ${it.x}\ny: ${it.y}")
+                        },
+                        onDoubleTap = {
+                            Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
+                        },
+                        onLongPress = {
+                            Log.e("long press", "x: ${it.x}\ny: ${it.y}")
+                        },
+                        onPress = {
+                            Log.e("press", "x: ${it.x}\ny: ${it.y}")
+                        }
+                    )
+                }
+                .pointerInput(true) {
+                    detectDragGestures (
+                        onDragStart = {
+                            Log.e("onDragStart", "x: ${it.x}\ny: ${it.y}")
+                        },
+                        onDrag = { change: PointerInputChange, dragAmount: Offset ->
+                            Log.e("onDrag", "x: ${change.position.x}\ny: ${change.position.y}")
+                        },
+                        onDragCancel = {
+                            Log.e("onDragCancel", "Drag Canceled")
+                        },
+                        onDragEnd = {
+                            Log.e("onDragEnd", "Drag Ended")
+                        }
+                    )
+                }
                 .background(
                     color = Color(0x55F50057)
                 ),
