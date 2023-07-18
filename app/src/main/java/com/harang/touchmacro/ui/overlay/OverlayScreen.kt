@@ -278,8 +278,9 @@ fun OverlayScreen(
         Log.e("isFullScreenShowing", GlobalObject.isFullScreenShowing.toString())
         Box(
             modifier = Modifier
-                .fillMaxSize()
-//                .offset(x = 0.dp, y = 100.dp)
+                .width(1000.dp)
+                .height(1000.dp)
+                .offset(x = 0.dp, y = 100.dp)
                 .background(
                     color = Color(0x55F50057)
                 ),
