@@ -12,10 +12,13 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -31,13 +34,41 @@ import com.harang.touchmacro.view.RightButton
 import com.harang.touchmacro.view.UpButton
 
 @Composable
-fun ServiceComposable() {
+fun ServiceComposable(
+    foregroundStartService: (String) -> Unit,
+) {
     Column(
         modifier = Modifier
             .semantics {
                 contentDescription = "ServiceComposable"
             }
     ) {
+        Button(
+            onClick = {
+                foregroundStartService("Start")
+            },
+            modifier = Modifier
+                .width(100.dp)
+                .height(100.dp)
+                .clip(RoundedCornerShape(10.dp))
+        ) {
+            Text(
+                text = "Trigger"
+            )
+        }
+        Button(
+            onClick = {
+                foregroundStartService("Exit")
+            },
+            modifier = Modifier
+                .width(100.dp)
+                .height(100.dp)
+                .clip(RoundedCornerShape(10.dp))
+        ) {
+            Text(
+                text = "Exit"
+            )
+        }
         Row() {
             AndroidView(
                 modifier = Modifier

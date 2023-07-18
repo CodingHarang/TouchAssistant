@@ -1,29 +1,39 @@
 package com.harang.touchmacro
 
 import android.annotation.SuppressLint
-import android.graphics.Point
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.hardware.display.DisplayManager
+import android.hardware.display.VirtualDisplay
+import android.media.projection.MediaProjection
+import android.media.projection.MediaProjectionManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
-import android.view.Display
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
 import com.harang.touchmacro.provider.SharedPreferencesManager
 import com.harang.touchmacro.ui.component.ServiceComposable
-import com.harang.touchmacro.ui.overlay.OverlayScreen
 import com.harang.touchmacro.ui.theme.TouchMacroTheme
+import com.harang.touchmacro.utils.foregroundStartService
 
 class MainActivity : ComponentActivity() {
+
+    lateinit var mpm: MediaProjectionManager
+    lateinit var mediaProjection: MediaProjection
+    lateinit var virtualDisplay: VirtualDisplay
+
     @SuppressLint("InternalInsetResource", "DiscouragedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +61,30 @@ class MainActivity : ComponentActivity() {
             }
         }
         Log.e("size", "${SharedPreferencesManager.getInt("screen_width")}, ${SharedPreferencesManager.getInt("screen_height")}")
+
+//        val mediaProjectionManager = getSystemService(MediaProjectionManager::class.java)
+//        var mediaProjection : MediaProjection
+//
+//        val startMediaProjection = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()
+//        ) { result ->
+//            if (result.resultCode == RESULT_OK) {
+//                mediaProjection = mediaProjectionManager
+//                    .getMediaProjection(result.resultCode, result.data!!)
+//
+//                virtualDisplay = mediaProjection.createVirtualDisplay(
+//                    "ScreenCapture",
+//                    500,
+//                    500,
+//                    resources.displayMetrics.densityDpi,
+//                    DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
+//                    null,
+//                    null, null)
+//            }
+//        }
+
+//        startMediaProjection.launch(mediaProjectionManager.createScreenCaptureIntent())
+
         setContent {
             TouchMacroTheme {
                 // A surface container using the 'background' color from the theme
@@ -61,7 +95,9 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        ServiceComposable()
+                        ServiceComposable(
+                            foregroundStartService = { foregroundStartService(it) }
+                        )
                     }
                 }
             }
