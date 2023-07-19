@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.harang.touchmacro.data.GlobalConstants
 import com.harang.touchmacro.provider.SharedPreferencesManager
 import com.harang.touchmacro.ui.overlay.OverlayScreen
 import com.harang.touchmacro.vo.GlobalObject
@@ -74,35 +75,126 @@ class MyAccessibilityService : AccessibilityService() {
             when (event.text.toString().replace("[", "").replace("]", "")) {
                 "Up" -> {
                     Log.e("up", "up")
+                    GlobalConstants.isLooping = true
                     val swipePath = Path()
                     val executor = newSingleThreadContext("executor")
                     executor.executor.execute() {
-                        for (i in 1..100) {
+                        while (GlobalConstants.isLooping) {
+                            // 1 big cycle
+                            for (i in 1 .. 20) {
+                                Log.e("start", "start")
+                                // 1st skill
+                                if (!GlobalConstants.isLooping) break
+                                dispatchTapGesture(415f, 1400f, 200, 200, 1)
 
-                            TimeUnit.MILLISECONDS.sleep(100)
-                            swipePath.moveTo(640f, 500f)
-                            swipePath.lineTo(640f, 500f)
-                            val gestureBuilder = GestureDescription.Builder()
-                            gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 50))
-                            dispatchGesture(gestureBuilder.build(), null, null)
+                                // tap cycle 2 times
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+
+                                // 2nd skill
+                                dispatchTapGesture(540f, 1400f, 200, 200, 1)
+
+                                // tap cycle 2 times
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+
+                                // 3rd skill
+                                dispatchTapGesture(175f, 1400f, 200, 200, 1)
+
+                                // tap cycle 2 times
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+
+                                // 4th skill
+                                if (!GlobalConstants.isLooping) break
+                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
+
+                                // tap cycle 2 times
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+
+                                // 5th skill
+                                if (!GlobalConstants.isLooping) break
+                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
+
+                                // tap cycle 2 times
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 100)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
+                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+
+                                // warrior window
+                                dispatchTapGesture(175f, 1525f, 200, 200, 1)
+
+                                // slide down
+                                dispatchDragGesture(355f, 1200f, 355f, 1400f, 300, 300, 1)
+
+                                // 1st warrior upgrade
+                                dispatchTapGesture(600f, 1200f, 50, 50, 5)
+
+                                // 2nd warrior upgrade
+                                dispatchTapGesture(600f, 1300f, 50, 50, 5)
+
+                                // 3rd warrior upgrade
+                                dispatchTapGesture(600f, 1400f, 50, 50, 5)
+
+                                // warrior window
+                                dispatchTapGesture(175f, 1525f, 200, 200, 1)
+                                Log.e("end", "end")
+                            }
+                            // prestige window
+                            // prestige
+                            // prestige ok
+                            // artifact window
+                            // all artifact upgrade
+                            // prestige window
+                            // wide window
+                            // 1st skill upgrade - wide window
+                            // 2nd skill upgrade - wide window
+                            // 3rd skill upgrade - wide window
+                            // 4th skill upgrade - wide window
+                            // 5th skill upgrade - wide window
+                            // 6th skill upgrade - wide window
+                            // wide window
+                            // prestige window
+
                         }
-
+//                            swipePath.moveTo(640f, 500f)
+//                            swipePath.lineTo(640f, 500f)
+//                            val gestureBuilder = GestureDescription.Builder()
+//                            gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 20))
+//                            dispatchGesture(gestureBuilder.build(), null, null)
+//                            TimeUnit.MILLISECONDS.sleep(25)
                     }
-//                    swipePath.moveTo(640f, 500f)
-//                    swipePath.lineTo(640f, 500f)
-//                    val gestureBuilder = GestureDescription.Builder()
-//                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 1000))
-//                    dispatchGesture(gestureBuilder.build(), null, null)
                 }
 
                 "Down" -> {
                     Log.e("down", "down")
-                    val swipePath = Path()
-                    swipePath.moveTo(540f, 1500f)
-                    swipePath.lineTo(540f, 500f)
-                    val gestureBuilder = GestureDescription.Builder()
-                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 1000))
-                    dispatchGesture(gestureBuilder.build(), null, null)
+                    GlobalConstants.isLooping = false
+//                    val swipePath = Path()
+//                    swipePath.moveTo(540f, 1500f)
+//                    swipePath.lineTo(540f, 500f)
+//                    val gestureBuilder = GestureDescription.Builder()
+//                    gestureBuilder.addStroke(StrokeDescription(swipePath, 0, 1000))
+//                    dispatchGesture(gestureBuilder.build(), null, null)
                 }
 
                 "Left" -> {
@@ -214,4 +306,29 @@ class MyAccessibilityService : AccessibilityService() {
 //            dispatchGesture(gestureBuilder.build(), null, null)
 //        }
 //    }
+    private fun dispatchTapGesture(moveToX: Float, moveToY: Float, duration: Long, delay: Long, repeat: Long) {
+        for (i in 1..repeat) {
+            if (!GlobalConstants.isLooping) break
+            val swipePath = Path()
+            swipePath.moveTo(moveToX, moveToY)
+            swipePath.lineTo(moveToX, moveToY)
+            val gestureBuilder = GestureDescription.Builder()
+            gestureBuilder.addStroke(StrokeDescription(swipePath, 0, duration))
+            dispatchGesture(gestureBuilder.build(), null, null)
+            TimeUnit.MILLISECONDS.sleep(duration + delay)
+        }
+    }
+
+    private fun dispatchDragGesture(moveToX: Float, moveToY: Float, lineToX: Float, lineToY: Float, duration: Long, delay: Long, repeat: Long) {
+        for (i in 1..repeat) {
+            if (!GlobalConstants.isLooping) break
+            val swipePath = Path()
+            swipePath.moveTo(moveToX, moveToY)
+            swipePath.lineTo(lineToX, lineToY)
+            val gestureBuilder = GestureDescription.Builder()
+            gestureBuilder.addStroke(StrokeDescription(swipePath, 0, duration))
+            dispatchGesture(gestureBuilder.build(), null, null)
+            TimeUnit.MILLISECONDS.sleep(duration + delay)
+        }
+    }
 }

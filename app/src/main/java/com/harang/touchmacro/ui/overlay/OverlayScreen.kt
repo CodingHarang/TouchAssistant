@@ -57,6 +57,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.harang.touchmacro.data.GlobalConstants
 import com.harang.touchmacro.service.OverlayService
 import com.harang.touchmacro.view.CustomView
 import com.harang.touchmacro.view.DownButton
@@ -111,8 +112,8 @@ fun OverlayScreen(
                 y = offsetY.toInt()
             )
         }
-        .width(200.dp)
-        .height(300.dp)
+        .width(100.dp)
+        .height(100.dp)
         .pointerInput(true) {
             var interaction: DragInteraction.Start? = null
             detectDragGestures(
@@ -157,8 +158,8 @@ fun OverlayScreen(
             Row() {
                 Box(
                     modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
+                        .width(50.dp)
+                        .height(50.dp)
                         .background(
                             color = Color(0xffEF9A9A)
                         )
@@ -179,8 +180,8 @@ fun OverlayScreen(
                 }
                 Box(
                     modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
+                        .width(50.dp)
+                        .height(50.dp)
                         .background(
                             color = Color(0xffCE93D8)
                         )
@@ -203,19 +204,36 @@ fun OverlayScreen(
             Row() {
                 Box(
                     modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
+                        .width(50.dp)
+                        .height(50.dp)
                         .background(
                             color = Color(0xff9FA8DA)
                         )
-                        .clickable {
-                            if (accessibilityManager.isEnabled) {
-                                val event =
-                                    AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
-                                event.text.add("Left")
-                                accessibilityManager.sendAccessibilityEvent(event)
-                            }
+                        .pointerInput(true) {
+                            detectTapGestures(
+                                onTap = {
+                                    Log.e("tap", "x: ${it.x}\ny: ${it.y}")
+                                },
+                                onDoubleTap = {
+                                    Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
+                                },
+                                onLongPress = {
+                                    Log.e("long press", "x: ${it.x}\ny: ${it.y}")
+                                },
+                                onPress = {
+                                    Log.e("press", "x: ${it.x}\ny: ${it.y}")
+                                    GlobalConstants.isLooping = false
+                                }
+                            )
                         },
+//                        .clickable {
+//                            if (accessibilityManager.isEnabled) {
+//                                val event =
+//                                    AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
+//                                event.text.add("Left")
+//                                accessibilityManager.sendAccessibilityEvent(event)
+//                            }
+//                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -225,8 +243,8 @@ fun OverlayScreen(
                 }
                 Box(
                     modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
+                        .width(50.dp)
+                        .height(50.dp)
                         .background(
                             color = Color(0xff81D4FA)
                         )
@@ -246,75 +264,75 @@ fun OverlayScreen(
                     )
                 }
             }
-            Box(
-                modifier = Modifier
-                    .width(200.dp)
-                    .height(100.dp)
-                    .background(
-                        color = Color(0xff80CBC4)
-                    )
-                    .clickable {
-                        if (GlobalObject.isFullScreenShowing) {
-                            GlobalObject.isFullScreenShowing = false
-                            updateIsFullScreen(GlobalObject.isFullScreenShowing)
-                        } else {
-                            GlobalObject.isFullScreenShowing = true
-                            updateIsFullScreen(GlobalObject.isFullScreenShowing)
-                        }
-                        isFullScreen.value = GlobalObject.isFullScreenShowing
-                        Log.e(
-                            "GlobalObject.isFullScreenShowing",
-                            GlobalObject.isFullScreenShowing.toString()
-                        )
-                    }
-            ) {
-                Text(
-                    text = "FullScreen",
-                    fontSize = 30.sp
-                )
-            }
+//            Box(
+//                modifier = Modifier
+//                    .width(50.dp)
+//                    .height(50.dp)
+//                    .background(
+//                        color = Color(0xff80CBC4)
+//                    )
+//                    .clickable {
+//                        if (GlobalObject.isFullScreenShowing) {
+//                            GlobalObject.isFullScreenShowing = false
+//                            updateIsFullScreen(GlobalObject.isFullScreenShowing)
+//                        } else {
+//                            GlobalObject.isFullScreenShowing = true
+//                            updateIsFullScreen(GlobalObject.isFullScreenShowing)
+//                        }
+//                        isFullScreen.value = GlobalObject.isFullScreenShowing
+//                        Log.e(
+//                            "GlobalObject.isFullScreenShowing",
+//                            GlobalObject.isFullScreenShowing.toString()
+//                        )
+//                    }
+//            ) {
+//                Text(
+//                    text = "FullScreen",
+//                    fontSize = 30.sp
+//                )
+//            }
         }
     }
     if (isFullScreen.value) {
-        Log.e("isFullScreenShowing", GlobalObject.isFullScreenShowing.toString())
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .pointerInput(true) {
-                    detectTapGestures(
-                        onTap = {
-                            Log.e("tap", "x: ${it.x}\ny: ${it.y}")
-                        },
-                        onDoubleTap = {
-                            Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
-                        },
-                        onLongPress = {
-                            Log.e("long press", "x: ${it.x}\ny: ${it.y}")
-                        },
-                        onPress = {
-                            Log.e("press", "x: ${it.x}\ny: ${it.y}")
-                        }
-                    )
-                }
-                .pointerInput(true) {
-                    detectDragGestures (
-                        onDragStart = {
-                            Log.e("onDragStart", "x: ${it.x}\ny: ${it.y}")
-                        },
-                        onDrag = { change: PointerInputChange, dragAmount: Offset ->
-                            Log.e("onDrag", "x: ${change.position.x}\ny: ${change.position.y}")
-                        },
-                        onDragCancel = {
-                            Log.e("onDragCancel", "Drag Canceled")
-                        },
-                        onDragEnd = {
-                            Log.e("onDragEnd", "Drag Ended")
-                        }
-                    )
-                }
-                .background(
-                    color = Color(0x55F50057)
-                ),
-        )
+//        Log.e("isFullScreenShowing", GlobalObject.isFullScreenShowing.toString())
+//        Box(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .pointerInput(true) {
+//                    detectTapGestures(
+//                        onTap = {
+//                            Log.e("tap", "x: ${it.x}\ny: ${it.y}")
+//                        },
+//                        onDoubleTap = {
+//                            Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
+//                        },
+//                        onLongPress = {
+//                            Log.e("long press", "x: ${it.x}\ny: ${it.y}")
+//                        },
+//                        onPress = {
+//                            Log.e("press", "x: ${it.x}\ny: ${it.y}")
+//                        }
+//                    )
+//                }
+//                .pointerInput(true) {
+//                    detectDragGestures (
+//                        onDragStart = {
+//                            Log.e("onDragStart", "x: ${it.x}\ny: ${it.y}")
+//                        },
+//                        onDrag = { change: PointerInputChange, dragAmount: Offset ->
+//                            Log.e("onDrag", "x: ${change.position.x}\ny: ${change.position.y}")
+//                        },
+//                        onDragCancel = {
+//                            Log.e("onDragCancel", "Drag Canceled")
+//                        },
+//                        onDragEnd = {
+//                            Log.e("onDragEnd", "Drag Ended")
+//                        }
+//                    )
+//                }
+//                .background(
+//                    color = Color(0x55F50057)
+//                ),
+//        )
     }
 }
