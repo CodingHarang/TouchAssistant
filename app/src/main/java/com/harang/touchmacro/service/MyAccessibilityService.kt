@@ -81,71 +81,71 @@ class MyAccessibilityService : AccessibilityService() {
                     executor.executor.execute() {
                         while (GlobalConstants.isLooping) {
                             // 1 big cycle
-                            for (i in 1 .. 20) {
+                            for (i in 1 .. 40) {
                                 Log.e("start", "start")
                                 // 1st skill
                                 if (!GlobalConstants.isLooping) break
                                 dispatchTapGesture(415f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 2nd skill
                                 dispatchTapGesture(540f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 3rd skill
                                 dispatchTapGesture(175f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 4th skill
                                 if (!GlobalConstants.isLooping) break
                                 dispatchTapGesture(55f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 5th skill
                                 if (!GlobalConstants.isLooping) break
                                 dispatchTapGesture(300f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
-                                dispatchTapGesture(355f, 500f, 20, 5, 100)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 100)
-                                dispatchTapGesture(355f, 740f, 20, 5, 100)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
+                                dispatchTapGesture(355f, 500f, 20, 5, 50)
+                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
+                                dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // warrior window
-                                dispatchTapGesture(175f, 1525f, 200, 200, 1)
+                                dispatchTapGesture(175f, 1525f, 200, 400, 1)
 
                                 // slide down
-                                dispatchDragGesture(355f, 1200f, 355f, 1400f, 300, 300, 1)
+                                dispatchDragGesture(355f, 1200f, 355f, 1400f, 400, 400, 1)
 
                                 // 1st warrior upgrade
                                 dispatchTapGesture(600f, 1200f, 50, 50, 5)
@@ -160,22 +160,57 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(175f, 1525f, 200, 200, 1)
                                 Log.e("end", "end")
                             }
-                            // prestige window
-                            // prestige
-                            // prestige ok
-                            // artifact window
-                            // all artifact upgrade
-                            // prestige window
-                            // wide window
-                            // 1st skill upgrade - wide window
-                            // 2nd skill upgrade - wide window
-                            // 3rd skill upgrade - wide window
-                            // 4th skill upgrade - wide window
-                            // 5th skill upgrade - wide window
-                            // 6th skill upgrade - wide window
-                            // wide window
-                            // prestige window
 
+                            // prestige window
+                            dispatchTapGesture(50f, 1525f, 200, 200, 1)
+
+                            // prestige
+                            dispatchTapGesture(600f, 1250f, 200, 200, 1)
+
+                            // prestige ok
+                            dispatchTapGesture(355f, 1300f, 200, 15000, 1)
+
+                            // prestige window
+                            dispatchTapGesture(50f, 1525f, 200, 200, 1)
+
+                            // wide window
+                            dispatchTapGesture(575f, 885f, 200, 200, 1)
+
+                            // 1st skill upgrade - wide window
+                            dispatchTapGesture(600f, 700f, 200, 200, 1)
+                            dispatchTapGesture(460f, 700f, 200, 200, 1)
+
+                            // 2nd skill upgrade - wide window
+                            dispatchTapGesture(600f, 820f, 200, 200, 1)
+                            dispatchTapGesture(460f, 820f, 200, 200, 1)
+
+                            // 3rd skill upgrade - wide window
+                            dispatchTapGesture(600f, 940f, 200, 200, 1)
+                            dispatchTapGesture(460f, 940f, 200, 200, 1)
+
+                            // 4th skill upgrade - wide window
+                            dispatchTapGesture(600f, 1060f, 200, 200, 1)
+                            dispatchTapGesture(460f, 1060f, 200, 200, 1)
+
+                            // 5th skill upgrade - wide window
+                            dispatchTapGesture(600f, 1180f, 200, 200, 1)
+                            dispatchTapGesture(460f, 1180f, 200, 200, 1)
+
+                            // 6th skill upgrade - wide window
+                            dispatchTapGesture(600f, 1300f, 200, 200, 1)
+                            dispatchTapGesture(460f, 1300f, 200, 200, 1)
+
+                            // wide window
+                            dispatchTapGesture(575f, 885f, 200, 200, 1)
+
+                            // artifact window
+                            dispatchTapGesture(540f, 1510f, 200, 200, 1)
+
+                            // all artifact upgrade
+                            dispatchTapGesture(590f, 1150f, 50, 50, 5)
+
+                            // artifact window
+                            dispatchTapGesture(50f, 1525f, 200, 200, 1)
                         }
 //                            swipePath.moveTo(640f, 500f)
 //                            swipePath.lineTo(640f, 500f)
