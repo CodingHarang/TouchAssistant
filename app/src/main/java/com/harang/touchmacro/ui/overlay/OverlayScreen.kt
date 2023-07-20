@@ -34,11 +34,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import android.graphics.Path
+import android.media.Image
 import android.os.Build
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Button
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -49,6 +51,7 @@ import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -57,6 +60,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.harang.touchmacro.R
 import com.harang.touchmacro.data.GlobalConstants
 import com.harang.touchmacro.service.OverlayService
 import com.harang.touchmacro.view.CustomView
@@ -167,15 +171,15 @@ fun OverlayScreen(
                             if (accessibilityManager.isEnabled) {
                                 val event =
                                     AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
-                                event.text.add("Up")
+                                event.text.add("Start")
                                 accessibilityManager.sendAccessibilityEvent(event)
                             }
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Up",
-                        fontSize = 30.sp
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_play_arrow_24),
+                        contentDescription = null
                     )
                 }
                 Box(
@@ -189,15 +193,15 @@ fun OverlayScreen(
                             if (accessibilityManager.isEnabled) {
                                 val event =
                                     AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
-                                event.text.add("Down")
+                                event.text.add("Pause")
                                 accessibilityManager.sendAccessibilityEvent(event)
                             }
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Down",
-                        fontSize = 30.sp
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_pause_24),
+                        contentDescription = null
                     )
                 }
             }
@@ -212,16 +216,16 @@ fun OverlayScreen(
                         .pointerInput(true) {
                             detectTapGestures(
                                 onTap = {
-                                    Log.e("tap", "x: ${it.x}\ny: ${it.y}")
+//                                    Log.e("tap", "x: ${it.x}\ny: ${it.y}")
                                 },
                                 onDoubleTap = {
-                                    Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
+//                                    Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
                                 },
                                 onLongPress = {
-                                    Log.e("long press", "x: ${it.x}\ny: ${it.y}")
+//                                    Log.e("long press", "x: ${it.x}\ny: ${it.y}")
                                 },
                                 onPress = {
-                                    Log.e("press", "x: ${it.x}\ny: ${it.y}")
+//                                    Log.e("press", "x: ${it.x}\ny: ${it.y}")
                                     GlobalConstants.isLooping = false
                                 }
                             )
@@ -236,9 +240,9 @@ fun OverlayScreen(
 //                        },
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Left",
-                        fontSize = 30.sp
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_stop_24),
+                        contentDescription = null
                     )
                 }
                 Box(
@@ -259,7 +263,7 @@ fun OverlayScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "${GlobalConstants.loopCount.collectAsState().value}",
+                        text = "${GlobalConstants.loopCount_1.collectAsState().value}",
                         fontSize = 30.sp
                     )
                 }

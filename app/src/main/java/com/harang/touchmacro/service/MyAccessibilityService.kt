@@ -74,19 +74,18 @@ class MyAccessibilityService : AccessibilityService() {
         if (event != null) {
             Log.e("eventNotNull", "eventNotNull\npackageName = ${event.packageName}")
             when (event.text.toString().replace("[", "").replace("]", "")) {
-                "Up" -> {
-                    Log.e("up", "up")
+                "Start" -> {
                     GlobalConstants.isLooping = true
-                    val swipePath = Path()
+                    val lastLoopCount = GlobalConstants.loopCount_2
                     val executor = newSingleThreadContext("executor")
-                    executor.executor.execute() {
+                    executor.executor.execute {
                         while (GlobalConstants.isLooping) {
                             // 1 big cycle
-                            for (i in 1 .. 20) {
-                                GlobalConstants.loopCount.update { i }
-                                Log.e("start", "start")
+                            for (i in lastLoopCount.. 20) {
+                                GlobalConstants.loopCount_1.update { i }
+                                GlobalConstants.loopCount_2 = i
+
                                 // 1st skill
-                                if (!GlobalConstants.isLooping) break
                                 dispatchTapGesture(415f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
@@ -120,7 +119,6 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 4th skill
-                                if (!GlobalConstants.isLooping) break
                                 dispatchTapGesture(55f, 1400f, 200, 300, 1)
 
                                 // tap cycle 2 times
@@ -132,7 +130,6 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 5th skill
-                                if (!GlobalConstants.isLooping) break
                                 dispatchTapGesture(300f, 1400f, 200, 300, 1)
 
                                 // tap cycle 2 times
@@ -160,8 +157,9 @@ class MyAccessibilityService : AccessibilityService() {
 
                                 // warrior window
                                 dispatchTapGesture(175f, 1525f, 200, 500, 1)
-                                Log.e("cycle", "${i}")
                             }
+                            GlobalConstants.loopCount_1.update { 1 }
+                            GlobalConstants.loopCount_2 = 1
 
                             // prestige window
                             dispatchTapGesture(50f, 1525f, 200, 500, 1)
