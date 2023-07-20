@@ -259,7 +259,7 @@ fun OverlayScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Right",
+                        text = "${GlobalConstants.loopCount.collectAsState().value}",
                         fontSize = 30.sp
                     )
                 }

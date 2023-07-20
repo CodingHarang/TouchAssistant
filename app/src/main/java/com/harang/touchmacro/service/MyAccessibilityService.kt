@@ -26,6 +26,7 @@ import com.harang.touchmacro.ui.overlay.OverlayScreen
 import com.harang.touchmacro.vo.GlobalObject
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.newSingleThreadContext
 import java.util.concurrent.TimeUnit
 
@@ -81,7 +82,8 @@ class MyAccessibilityService : AccessibilityService() {
                     executor.executor.execute() {
                         while (GlobalConstants.isLooping) {
                             // 1 big cycle
-                            for (i in 1 .. 25) {
+                            for (i in 1 .. 20) {
+                                GlobalConstants.loopCount.update { i }
                                 Log.e("start", "start")
                                 // 1st skill
                                 if (!GlobalConstants.isLooping) break
@@ -96,7 +98,7 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 2nd skill
-                                dispatchTapGesture(540f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(540f, 1400f, 200, 300, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -107,7 +109,7 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 3rd skill
-                                dispatchTapGesture(175f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(175f, 1400f, 200, 300, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -119,7 +121,7 @@ class MyAccessibilityService : AccessibilityService() {
 
                                 // 4th skill
                                 if (!GlobalConstants.isLooping) break
-                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(55f, 1400f, 200, 300, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -131,7 +133,7 @@ class MyAccessibilityService : AccessibilityService() {
 
                                 // 5th skill
                                 if (!GlobalConstants.isLooping) break
-                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(300f, 1400f, 200, 300, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -145,7 +147,7 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(175f, 1525f, 200, 500, 1)
 
                                 // slide down
-                                dispatchDragGesture(355f, 1200f, 355f, 1400f, 400, 400, 1)
+                                dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1)
 
                                 // 1st warrior upgrade
                                 dispatchTapGesture(600f, 1200f, 50, 50, 5)
@@ -163,6 +165,12 @@ class MyAccessibilityService : AccessibilityService() {
 
                             // prestige window
                             dispatchTapGesture(50f, 1525f, 200, 500, 1)
+
+                            // slide down
+                            dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1)
+
+                            // slide down
+                            dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1)
 
                             // prestige
                             dispatchTapGesture(600f, 1250f, 200, 500, 1)
@@ -204,10 +212,10 @@ class MyAccessibilityService : AccessibilityService() {
                             dispatchTapGesture(460f, 1300f, 200, 500, 1)
 
                             // wide window
-                            dispatchTapGesture(575f, 130f, 200, 300, 1)
+                            dispatchTapGesture(575f, 130f, 200, 500, 1)
 
                             // artifact window
-                            dispatchTapGesture(540f, 1510f, 200, 300, 1)
+                            dispatchTapGesture(540f, 1510f, 200, 500, 1)
 
                             // all artifact upgrade
                             dispatchTapGesture(590f, 1150f, 50, 50, 5)
