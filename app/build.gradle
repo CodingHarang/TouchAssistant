@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.harang.touchmacro'
+    namespace 'com.harang.touchassistant'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.harang.touchmacro"
+        applicationId "com.harang.touchassistant"
         minSdk 24
         targetSdk 33
         versionCode 1
