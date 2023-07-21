@@ -52,8 +52,8 @@ class MyAccessibilityService : AccessibilityService() {
     )
 
     private val params2 = WindowManager.LayoutParams(
-        SharedPreferencesManager.getInt("screen_width") / 2,
-        SharedPreferencesManager.getInt("screen_height"),
+        SharedPreferencesManager.getInt("screenWidth") / 2,
+        SharedPreferencesManager.getInt("screenHeight") + SharedPreferencesManager.getInt("statusBarHeight"),
         layoutFlag,
         // WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE : 터치 이벤트를 받지 않는다.
         // WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN : 화면에 가득 차게 한다.
@@ -240,17 +240,23 @@ class MyAccessibilityService : AccessibilityService() {
         if (!GlobalObject.isFullScreenShowing) {
             params1.x += x
             params1.y += y
+            Log.e("params1 position", "x: ${params1.x}\nY: ${params1.y}")
             windowManager.updateViewLayout(composeView, params1)
         }
     }
 
     private fun updateIsFullScreen(isFull: Boolean) {
         if (isFull) {
-            params2.x = 0
-            params2.y = SharedPreferencesManager.getInt("status_bar_height")
-            params2.gravity = Gravity.START
+            GlobalObject.isFullScreenShowing_flow.update {
+                GlobalObject.isFullScreenShowing = true
+                true
+            }
             windowManager.updateViewLayout(composeView, params2)
         } else {
+            GlobalObject.isFullScreenShowing_flow.update {
+                GlobalObject.isFullScreenShowing = false
+                false
+            }
             windowManager.updateViewLayout(composeView, params1)
         }
     }
@@ -260,6 +266,12 @@ class MyAccessibilityService : AccessibilityService() {
         Log.e("onServiceConnected", "onServiceConnected")
         composeView = ComposeView(this)
         lifecycleOwner = MyLifecycleOwner()
+        params1.gravity = Gravity.START or Gravity.TOP
+        params1.x = 0
+        params1.y = -(SharedPreferencesManager.getInt("statusBarHeight") + 1)
+        params2.gravity = Gravity.START or Gravity.TOP
+        params2.x = 0
+        params2.y = -(SharedPreferencesManager.getInt("statusBarHeight") + 1)
         showOverlay(
             stopSelf = {
                 lifecycleOwner.setCurrentState(Lifecycle.State.DESTROYED)

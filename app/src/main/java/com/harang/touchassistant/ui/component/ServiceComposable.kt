@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -29,6 +30,7 @@ import com.harang.touchassistant.view.DownButton
 import com.harang.touchassistant.view.LeftButton
 import com.harang.touchassistant.view.RightButton
 import com.harang.touchassistant.view.UpButton
+import com.harang.touchassistant.vo.GlobalObject
 
 @Composable
 fun ServiceComposable(
@@ -40,131 +42,21 @@ fun ServiceComposable(
                 contentDescription = "ServiceComposable"
             }
     ) {
-        Button(
-            onClick = {
-                foregroundStartService("Start")
-            },
-            modifier = Modifier
-                .width(100.dp)
-                .height(100.dp)
-                .clip(RoundedCornerShape(10.dp))
-        ) {
-            Text(
-                text = "Trigger"
-            )
-        }
-        Button(
-            onClick = {
-                foregroundStartService("Exit")
-            },
-            modifier = Modifier
-                .width(100.dp)
-                .height(100.dp)
-                .clip(RoundedCornerShape(10.dp))
-        ) {
-            Text(
-                text = "Exit"
-            )
-        }
-        Row() {
-            AndroidView(
-                modifier = Modifier
-                    .width(IntrinsicSize.Min)
-                    .height(IntrinsicSize.Min),
-                factory = { context ->
-                    UpButton(context).apply {
-                        setOnClickListener {view ->
-                            Log.e("UpButton", "UpButton clicked")
-                        }
-                    }
-                },
-                update = { view ->
-                }
-            )
-            AndroidView(
-                modifier = Modifier
-                    .width(IntrinsicSize.Min)
-                    .height(IntrinsicSize.Min),
-                factory = { context ->
-                    DownButton(context).apply {
-                        setOnClickListener {view ->
-                            Log.e("DownButton", "DownButton clicked")
-                        }
-                    }
-                },
-                update = { view ->
-                }
-            )
-        }
-        Row() {
-            AndroidView(
-                modifier = Modifier
-                    .width(IntrinsicSize.Min)
-                    .height(IntrinsicSize.Min),
-                factory = { context ->
-                    LeftButton(context).apply {
-                        setOnClickListener {view ->
-                            Log.e("LeftButton", "LeftButton clicked")
-                        }
-                    }
-                },
-                update = { view ->
-                }
-            )
-            AndroidView(
-                modifier = Modifier
-                    .width(IntrinsicSize.Min)
-                    .height(IntrinsicSize.Min),
-                factory = { context ->
-                    RightButton(context).apply {
-                        setOnClickListener {view ->
-                            Log.e("RightButton", "RightButton clicked")
-                        }
-                    }
-                },
-                update = { view ->
-                }
-            )
-        }
-
-        val view = LocalView.current
-        val accessibilityManager = view.context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
         Box(
             modifier = Modifier
-                .width(200.dp)
-                .height(200.dp)
+                .padding(40.dp)
+                .width(100.dp)
+                .height(100.dp)
                 .background(
-                    color = Color(0xffE57373)
+                    color = Color(0xFFEA80FC)
                 )
-                .clickable(
-                    onClickLabel = "pink Box touched"
-                ) {
-                    if (accessibilityManager.isEnabled) {
-                        val event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
-                        event.text.add("Your announcement text")
-                        accessibilityManager.sendAccessibilityEvent(event)
-                    }
-                    Log.e("button", "pink Box touched")
+                .clickable {
+                    GlobalObject.isOverlayShowing.value = !GlobalObject.isOverlayShowing.value
                 }
         ) {
+            Text(
+                text = "Start"
+            )
         }
-        Button(
-            modifier = Modifier
-                .width(200.dp)
-                .height(200.dp)
-                .background(
-                    color = Color(0xffE57373)
-                ),
-            onClick = {
-                Log.e("button", "pink button clicked")
-            }
-        ) {
-
-        }
-
-        Checkbox(
-            checked = false,
-            onCheckedChange = {}
-        )
     }
 }

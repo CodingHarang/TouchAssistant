@@ -29,28 +29,31 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val systemNavigationBarResourceId = applicationContext.resources.getIdentifier("navigation_bar_height", "dimen", "android")
         val systemStatusBarResourceId = applicationContext.resources.getIdentifier("status_bar_height", "dimen", "android")
-        SharedPreferencesManager.putInt("screen_width", resources.displayMetrics.widthPixels)
+        SharedPreferencesManager.putInt("screenWidth", resources.displayMetrics.widthPixels)
 
         if (systemNavigationBarResourceId > 0) {
             if (systemStatusBarResourceId > 0) {
                 val navigationBarHeight = applicationContext.resources.getDimensionPixelSize(systemNavigationBarResourceId)
                 val statusBarHeight = applicationContext.resources.getDimensionPixelSize(systemStatusBarResourceId)
-                SharedPreferencesManager.putInt("screen_height", resources.displayMetrics.heightPixels + navigationBarHeight)
-                SharedPreferencesManager.putInt("status_bar_height", statusBarHeight)
+                SharedPreferencesManager.putInt("screenHeight", resources.displayMetrics.heightPixels + navigationBarHeight)
+                SharedPreferencesManager.putInt("statusBarHeight", statusBarHeight)
             } else {
                 val navigationBarHeight = applicationContext.resources.getDimensionPixelSize(systemNavigationBarResourceId)
-                SharedPreferencesManager.putInt("screen_height", resources.displayMetrics.heightPixels + navigationBarHeight)
+                SharedPreferencesManager.putInt("screenHeight", resources.displayMetrics.heightPixels + navigationBarHeight)
             }
         } else {
             if (systemStatusBarResourceId > 0) {
                 val statusBarHeight = applicationContext.resources.getDimensionPixelSize(systemStatusBarResourceId)
-                SharedPreferencesManager.putInt("screen_height", resources.displayMetrics.heightPixels)
-                SharedPreferencesManager.putInt("status_bar_height", statusBarHeight)
+                SharedPreferencesManager.putInt("screenHeight", resources.displayMetrics.heightPixels)
+                SharedPreferencesManager.putInt("statusBarHeight", statusBarHeight)
             } else {
-                SharedPreferencesManager.putInt("screen_height", resources.displayMetrics.heightPixels)
+                SharedPreferencesManager.putInt("screenHeight", resources.displayMetrics.heightPixels)
             }
         }
-        Log.e("size", "${SharedPreferencesManager.getInt("screen_width")}, ${SharedPreferencesManager.getInt("screen_height")}")
+        Log.e("size", "screenWidth: ${SharedPreferencesManager.getInt("screenWidth")}" +
+                "\n${SharedPreferencesManager.getInt("screenHeight")}" +
+                "\n${SharedPreferencesManager.getInt("statusBarHeight")}"
+        )
 
 //        val mediaProjectionManager = getSystemService(MediaProjectionManager::class.java)
 //        var mediaProjection : MediaProjection
