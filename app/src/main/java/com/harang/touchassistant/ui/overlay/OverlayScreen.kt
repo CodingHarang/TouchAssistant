@@ -24,18 +24,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import android.os.Build
 import android.view.WindowInsets
 import android.view.accessibility.AccessibilityEvent
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -45,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.harang.touchassistant.R
 import com.harang.touchassistant.data.GlobalConstants
+import com.harang.touchassistant.data.InputType
 import com.harang.touchassistant.vo.GlobalObject
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -342,14 +347,26 @@ fun OverlayScreen(
             }
         }
         if (GlobalObject.isFullScreenShowing_flow.collectAsState().value) {
+            val isDotCreated = remember { mutableStateOf(false) }
+            val inputType = remember { mutableStateOf(InputType.Touch) }
+            val inputData = remember { mutableStateOf(listOf<IntOffset>()) }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .pointerInput(true) {
                         detectTapGestures(
                             onTap = {
+                                isDotCreated.value = true
+                                inputType.value = InputType.Touch
                                 Log.e("tap", "x: ${it.x}\ny: ${it.y}")
-                                updateIsFullScreen(false)
+//                                updateIsFullScreen(false)
+                                inputData.value = listOf(
+                                    IntOffset(
+                                        it.x.toInt(),
+                                        it.y.toInt()
+                                    )
+                                )
+
                             },
                             onDoubleTap = {
                                 Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
@@ -365,10 +382,25 @@ fun OverlayScreen(
                     .pointerInput(true) {
                         detectDragGestures(
                             onDragStart = {
+                                isDotCreated.value = true
+                                inputType.value = InputType.Drag
+                                inputData.value = listOf(
+                                    IntOffset(
+                                        it.x.toInt(),
+                                        it.y.toInt()
+                                    )
+                                )
                                 Log.e("onDragStart", "x: ${it.x}\ny: ${it.y}")
                             },
                             onDrag = { change: PointerInputChange, dragAmount: Offset ->
-                                Log.e("onDrag", "x: ${change.position.x}\ny: ${change.position.y}")
+
+                                inputData.value = inputData.value + listOf(
+                                    IntOffset(
+                                        change.position.x.toInt(),
+                                        change.position.y.toInt()
+                                    )
+                                )
+                                Log.e("onDrag", "x: ${change.position.x}\ny: ${change.position.y}\n${dragAmount.x}\n${dragAmount.y}")
                             },
                             onDragCancel = {
                                 Log.e("onDragCancel", "Drag Canceled")
@@ -381,7 +413,51 @@ fun OverlayScreen(
                     .background(
                         color = Color(0x55F50057)
                     ),
-            )
+            ) {
+                if (isDotCreated.value) {
+                    if (inputType.value == InputType.Touch) {
+                        Box(
+                            modifier = Modifier
+                                .width(40.dp)
+                                .height(40.dp)
+                                .offset {
+                                    IntOffset(
+                                        (inputData.value[0].x - (this.density * 20).toInt()),
+                                        (inputData.value[0].y - (this.density * 20).toInt())
+                                    )
+                                }
+                                .clip(
+                                    CircleShape
+                                )
+                                .background(
+                                    color = Color(0xFFA7FFEB),
+                                    shape = CircleShape
+                                )
+                        )
+                    } else {
+                        for(i in 1 until inputData.value.size) {
+                            Box(
+                                modifier = Modifier
+                                    .width(40.dp)
+                                    .height(40.dp)
+                                    .offset {
+                                        IntOffset(
+                                            (inputData.value[i].x - (this.density * 20).toInt()),
+                                            (inputData.value[i].y - (this.density * 20).toInt())
+                                        )
+                                    }
+                                    .clip(
+                                        CircleShape
+                                    )
+                                    .background(
+                                        color = Color(0xFFA7FFEB),
+                                        shape = CircleShape
+                                    )
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }

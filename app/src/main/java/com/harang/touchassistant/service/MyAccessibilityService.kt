@@ -52,7 +52,7 @@ class MyAccessibilityService : AccessibilityService() {
     )
 
     private val params2 = WindowManager.LayoutParams(
-        SharedPreferencesManager.getInt("screenWidth") / 2,
+        SharedPreferencesManager.getInt("screenWidth"),
         SharedPreferencesManager.getInt("screenHeight") + SharedPreferencesManager.getInt("statusBarHeight"),
         layoutFlag,
         // WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE : 터치 이벤트를 받지 않는다.
@@ -75,13 +75,17 @@ class MyAccessibilityService : AccessibilityService() {
                     executor.executor.execute {
                         while (GlobalObject.isRunning) {
                             // 1 big cycle
-                            for (i in lastLoopCount.. 10) {
+                            for (i in lastLoopCount.. 6) {
                                 if (!GlobalObject.isRunning) break
                                 GlobalObject.loopCount_flow.update { i }
                                 GlobalObject.loopCount = i
 
                                 // 1st skill
                                 dispatchTapGesture(415f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(540f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(175f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -92,7 +96,11 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 2nd skill
-                                dispatchTapGesture(540f, 1400f, 200, 300, 1)
+                                dispatchTapGesture(415f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(540f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(175f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -103,7 +111,11 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 3rd skill
-                                dispatchTapGesture(175f, 1400f, 200, 300, 1)
+                                dispatchTapGesture(415f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(540f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(175f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -114,7 +126,11 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 4th skill
-                                dispatchTapGesture(55f, 1400f, 200, 300, 1)
+                                dispatchTapGesture(415f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(540f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(175f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
@@ -125,7 +141,11 @@ class MyAccessibilityService : AccessibilityService() {
                                 dispatchTapGesture(355f, 740f, 20, 5, 50)
 
                                 // 5th skill
-                                dispatchTapGesture(300f, 1400f, 200, 300, 1)
+                                dispatchTapGesture(415f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(540f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(175f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
+                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
 
                                 // tap cycle 2 times
                                 dispatchTapGesture(355f, 500f, 20, 5, 50)
