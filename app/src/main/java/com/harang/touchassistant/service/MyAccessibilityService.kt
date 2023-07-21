@@ -75,7 +75,7 @@ class MyAccessibilityService : AccessibilityService() {
                     executor.executor.execute {
                         while (GlobalObject.isRunning) {
                             // 1 big cycle
-                            for (i in lastLoopCount.. 20) {
+                            for (i in lastLoopCount.. 10) {
                                 if (!GlobalObject.isRunning) break
                                 GlobalObject.loopCount_flow.update { i }
                                 GlobalObject.loopCount = i
