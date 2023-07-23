@@ -75,7 +75,7 @@ class MyAccessibilityService : AccessibilityService() {
                     executor.executor.execute {
                         while (GlobalObject.isRunning) {
                             // 1 big cycle
-                            for (i in lastLoopCount.. 15) {
+                            for (i in lastLoopCount.. 20) {
                                 if (!GlobalObject.isRunning) break
                                 GlobalObject.loopCount_flow.update { i }
                                 GlobalObject.loopCount = i
@@ -192,6 +192,9 @@ class MyAccessibilityService : AccessibilityService() {
 
                             // prestige ok
                             dispatchTapGesture(355f, 1300f, 200, 15000, 1)
+
+                            // close equipment full dialog
+                            dispatchTapGesture(355f, 1030f, 200, 1000, 1)
 
                             // prestige window
                             dispatchTapGesture(50f, 1525f, 200, 500, 1)
