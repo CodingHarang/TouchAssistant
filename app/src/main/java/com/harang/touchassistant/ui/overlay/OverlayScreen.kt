@@ -312,8 +312,8 @@ fun OverlayScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "${GlobalObject.loopCount_flow.collectAsState().value}",
-                            fontSize = 30.sp
+                            text = "${GlobalObject.loopCount_flow.collectAsState().value}\n/${GlobalObject.gestureArrayList.size}",
+                            fontSize = 12.sp
                         )
                     }
                 }

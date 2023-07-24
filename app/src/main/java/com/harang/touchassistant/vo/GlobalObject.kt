@@ -12,4 +12,5 @@ object GlobalObject {
     var isPaused = false
     var loopCount = 1
     val loopCount_flow = MutableStateFlow(1)
+    val gestureArrayList: ArrayList<() -> Unit> = arrayListOf()
 }

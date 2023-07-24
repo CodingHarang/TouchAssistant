@@ -6,6 +6,7 @@ import android.accessibilityservice.GestureDescription.StrokeDescription
 import android.graphics.Path
 import android.graphics.PixelFormat
 import android.os.Build
+import android.provider.Settings.Global
 import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
@@ -65,187 +66,22 @@ class MyAccessibilityService : AccessibilityService() {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        Log.e("event", "${event}\n${event?.text}\n${event?.text.toString().replace("[", "").replace("]", "")}")
         if (event != null) {
-            Log.e("eventNotNull", "eventNotNull\npackageName = ${event.packageName}")
             when (event.text.toString().replace("[", "").replace("]", "")) {
                 "Start Touch Assistant" -> {
-                    val lastLoopCount = GlobalObject.loopCount
+
                     val executor = newSingleThreadContext("executor")
                     executor.executor.execute {
                         while (GlobalObject.isRunning) {
-                            // 1 big cycle
-                            for (i in lastLoopCount.. 20) {
-                                if (!GlobalObject.isRunning) break
-                                GlobalObject.loopCount_flow.update { i }
-                                GlobalObject.loopCount = i
-
-                                // 1st skill
-                                dispatchTapGesture(420f, 1420f, 200, 200, 1)
-                                dispatchTapGesture(535f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(180f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
-
-                                // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-
-                                // 2nd skill
-                                dispatchTapGesture(420f, 1420f, 200, 200, 1)
-                                dispatchTapGesture(535f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(180f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
-
-                                // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-
-                                // 3rd skill
-                                dispatchTapGesture(420f, 1420f, 200, 200, 1)
-                                dispatchTapGesture(535f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(180f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
-
-                                // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-
-                                // 4th skill
-                                dispatchTapGesture(420f, 1420f, 200, 200, 1)
-                                dispatchTapGesture(535f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(180f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
-
-                                // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-
-                                // 5th skill
-                                dispatchTapGesture(420f, 1420f, 200, 200, 1)
-                                dispatchTapGesture(535f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(180f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(55f, 1400f, 200, 200, 1)
-                                dispatchTapGesture(300f, 1400f, 200, 200, 1)
-
-                                // tap cycle 2 times
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-                                dispatchTapGesture(355f, 500f, 20, 5, 50)
-                                dispatchTapGesture(355f, 1160f, 20, 5, 50)
-                                dispatchTapGesture(355f, 740f, 20, 5, 50)
-
-                                // warrior window
-                                dispatchTapGesture(175f, 1525f, 200, 500, 1)
-
-                                // slide down
-                                dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1)
-
-                                // 1st warrior upgrade
-                                dispatchTapGesture(600f, 1200f, 50, 50, 5)
-
-                                // 2nd warrior upgrade
-                                dispatchTapGesture(600f, 1300f, 50, 50, 5)
-
-                                // 3rd warrior upgrade
-                                dispatchTapGesture(600f, 1400f, 50, 50, 5)
-
-                                // warrior window
-                                dispatchTapGesture(175f, 1525f, 200, 500, 1)
-                            }
-                            if (GlobalObject.isRunning) {
-                                GlobalObject.loopCount_flow.update { 1 }
+                            GlobalObject.gestureArrayList[GlobalObject.loopCount]()
+                            GlobalObject.loopCount++
+                            if (GlobalObject.loopCount >= GlobalObject.gestureArrayList.size) {
                                 GlobalObject.loopCount = 1
                             }
-
-                            // prestige window
-                            dispatchTapGesture(50f, 1525f, 200, 500, 1)
-
-                            // slide down
-                            dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1)
-
-                            // slide down
-                            dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1)
-
-                            // prestige
-                            dispatchTapGesture(600f, 1250f, 200, 500, 1)
-
-                            // prestige ok
-                            dispatchTapGesture(355f, 1300f, 200, 15000, 1)
-
-                            // close equipment full dialog
-                            dispatchTapGesture(355f, 1030f, 200, 1000, 1)
-
-                            // prestige window
-                            dispatchTapGesture(50f, 1525f, 200, 500, 1)
-
-                            // wide window
-                            dispatchTapGesture(575f, 885f, 200, 500, 1)
-
-                            // tap level up
-                            dispatchTapGesture(610f, 330f, 200, 500, 1)
-
-                            // 1st skill upgrade - wide window
-                            dispatchTapGesture(600f, 700f, 200, 500, 1)
-                            dispatchTapGesture(460f, 700f, 200, 500, 1)
-
-                            // 2nd skill upgrade - wide window
-                            dispatchTapGesture(600f, 820f, 200, 500, 1)
-                            dispatchTapGesture(460f, 820f, 200, 500, 1)
-
-                            // 3rd skill upgrade - wide window
-                            dispatchTapGesture(600f, 940f, 200, 500, 1)
-                            dispatchTapGesture(460f, 940f, 200, 500, 1)
-
-                            // 4th skill upgrade - wide window
-                            dispatchTapGesture(600f, 1060f, 200, 500, 1)
-                            dispatchTapGesture(460f, 1060f, 200, 500, 1)
-
-                            // 5th skill upgrade - wide window
-                            dispatchTapGesture(600f, 1180f, 200, 500, 1)
-                            dispatchTapGesture(460f, 1180f, 200, 500, 1)
-
-                            // 6th skill upgrade - wide window
-                            dispatchTapGesture(600f, 1300f, 200, 500, 1)
-                            dispatchTapGesture(460f, 1300f, 200, 500, 1)
-
-                            // Mega Boost
-                            dispatchTapGesture(600f, 1430f, 200, 500, 1)
-                            dispatchTapGesture(370f, 1130f, 200, 500, 1)
-
-                            // wide window close
-                            dispatchTapGesture(575f, 130f, 200, 500, 1)
-
-                            // artifact window
-                            dispatchTapGesture(540f, 1510f, 200, 500, 1)
-
-                            // all artifact upgrade
-                            dispatchTapGesture(590f, 1150f, 50, 50, 5)
-
-                            // artifact window
-                            dispatchTapGesture(540f, 1510f, 200, 300, 1)
+                            GlobalObject.loopCount_flow.update { GlobalObject.loopCount }
                         }
                     }
+                    executor.close()
                 }
 
                 "Pause Touch Assistant" -> {
@@ -291,6 +127,8 @@ class MyAccessibilityService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.e("onServiceConnected", "onServiceConnected")
+        makeGestureArray()
+        Log.e("GestureArray", "${GlobalObject.gestureArrayList.size}")
         composeView = ComposeView(this)
         lifecycleOwner = MyLifecycleOwner()
         params1.gravity = Gravity.START or Gravity.TOP
@@ -362,6 +200,7 @@ class MyAccessibilityService : AccessibilityService() {
 //        }
 //    }
     private fun dispatchTapGesture(moveToX: Float, moveToY: Float, duration: Long, delay: Long, repeat: Long) {
+        Log.e("dispatchTapGesture", "dispatchTapGesture")
         for (i in 1..repeat) {
             if (!GlobalObject.isRunning) break
             val swipePath = Path()
@@ -385,5 +224,115 @@ class MyAccessibilityService : AccessibilityService() {
             dispatchGesture(gestureBuilder.build(), null, null)
             TimeUnit.MILLISECONDS.sleep(duration + delay)
         }
+    }
+
+    private fun makeGestureArray() {
+        GlobalObject.gestureArrayList.clear()
+        for (i in 1..15) {
+            for (j in 1..6) {
+                // use skill
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(420f, 1420f, 100, 100, 1) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(535f, 1400f, 100, 100, 1) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(180f, 1400f, 100, 100, 1) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(55f, 1400f, 100, 100, 1) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(300f, 1400f, 100, 100, 1) })
+
+                // tap cycle 2 times
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 500f, 20, 5, 50) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 1160f, 20, 5, 50) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 740f, 20, 5, 50) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 500f, 20, 5, 50) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 1160f, 20, 5, 50) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 740f, 20, 5, 50) })
+            }
+            // open warrior window
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(175f, 1525f, 200, 500, 1) })
+
+            // slide down
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
+
+            // 1st warrior upgrade
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1200f, 50, 50, 5) })
+
+            // 2nd warrior upgrade
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1300f, 50, 50, 5) })
+
+            // 3rd warrior upgrade
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1400f, 50, 50, 5) })
+
+            // close warrior window
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(175f, 1525f, 200, 500, 1) })
+        }
+
+        // prestige window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 500, 1) })
+
+        // slide down
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
+
+        // slide down
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
+
+        // prestige
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1250f, 200, 500, 1) })
+
+        // prestige ok
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 1300f, 200, 15000, 1) })
+
+        // close equipment full dialog
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 1030f, 200, 1000, 1) })
+
+        // prestige window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 500, 1) })
+
+        // wide window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 885f, 200, 500, 1) })
+
+        // tap level up
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(610f, 330f, 200, 500, 1) })
+
+        // 1st skill upgrade - wide window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 700f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 700f, 200, 500, 1) })
+
+        // 2nd skill upgrade - wide window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 820f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 820f, 200, 500, 1) })
+
+        // 3rd skill upgrade - wide window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 940f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 940f, 200, 500, 1) })
+
+        // 4th skill upgrade - wide window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1060f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 1060f, 200, 500, 1) })
+
+        // 5th skill upgrade - wide window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1180f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 1180f, 200, 500, 1) })
+
+        // 6th skill upgrade - wide window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1300f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 1300f, 200, 500, 1) })
+
+        // Mega Boost
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1430f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 1130f, 200, 500, 1) })
+
+        // wide window close
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 200, 500, 1) })
+
+        // artifact window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 500, 1) })
+
+        // all artifact upgrade
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(590f, 1150f, 50, 50, 5) })
+
+        // artifact window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 300, 1) })
+    }
+
+    private fun addGestureToArrayList(arrList: ArrayList<() -> Unit>, gesture: () -> Unit) {
+        arrList.add(gesture)
     }
 }
