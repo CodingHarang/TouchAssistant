@@ -228,7 +228,7 @@ class MyAccessibilityService : AccessibilityService() {
 
     private fun makeGestureArray() {
         GlobalObject.gestureArrayList.clear()
-        for (i in 1..15) {
+        for (i in 1..6) {
             for (j in 1..6) {
                 // use skill
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(420f, 1420f, 100, 100, 1) })
@@ -236,6 +236,7 @@ class MyAccessibilityService : AccessibilityService() {
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(180f, 1400f, 100, 100, 1) })
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(55f, 1400f, 100, 100, 1) })
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(300f, 1400f, 100, 100, 1) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(660f, 1400f, 100, 100, 1) })
 
                 // tap cycle 2 times
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 500f, 20, 5, 50) })
@@ -286,7 +287,7 @@ class MyAccessibilityService : AccessibilityService() {
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 500, 1) })
 
         // wide window
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 885f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 885f, 200, 1000, 1) })
 
         // tap level up
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(610f, 330f, 200, 500, 1) })
@@ -320,7 +321,7 @@ class MyAccessibilityService : AccessibilityService() {
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 1130f, 200, 500, 1) })
 
         // wide window close
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 200, 1000, 1) })
 
         // artifact window
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 500, 1) })
