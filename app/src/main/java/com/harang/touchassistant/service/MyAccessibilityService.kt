@@ -228,7 +228,7 @@ class MyAccessibilityService : AccessibilityService() {
 
     private fun makeGestureArray() {
         GlobalObject.gestureArrayList.clear()
-        for (i in 1..6) {
+        for (i in 1..15) {
             for (j in 1..6) {
                 // use skill
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(420f, 1420f, 100, 100, 1) })
@@ -250,6 +250,7 @@ class MyAccessibilityService : AccessibilityService() {
             addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(175f, 1525f, 200, 500, 1) })
 
             // slide down
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
             addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
 
             // 1st warrior upgrade
