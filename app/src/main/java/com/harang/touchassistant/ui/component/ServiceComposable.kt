@@ -17,7 +17,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -25,7 +28,9 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.harang.touchassistant.provider.SharedPreferencesManager
 import com.harang.touchassistant.view.DownButton
 import com.harang.touchassistant.view.LeftButton
 import com.harang.touchassistant.view.RightButton
@@ -36,6 +41,7 @@ import com.harang.touchassistant.vo.GlobalObject
 fun ServiceComposable(
     foregroundStartService: (String) -> Unit,
 ) {
+    val str = remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .semantics {
@@ -56,6 +62,29 @@ fun ServiceComposable(
         ) {
             Text(
                 text = "Start"
+            )
+        }
+        TextField(
+            value = str.value,
+            onValueChange = {
+                str.value = it
+            }
+        )
+        Box(
+            modifier = Modifier
+                .padding(40.dp)
+                .width(100.dp)
+                .height(100.dp)
+                .background(
+                    color = Color(0xFFEA80FC)
+                )
+                .clickable {
+                    SharedPreferencesManager.putInt("loop_count", str.value.toInt())
+                }
+        ) {
+            Text(
+                text = "Save",
+                fontSize = 30.sp
             )
         }
     }

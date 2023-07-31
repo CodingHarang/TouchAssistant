@@ -228,7 +228,7 @@ class MyAccessibilityService : AccessibilityService() {
 
     private fun makeGestureArray() {
         GlobalObject.gestureArrayList.clear()
-        for (i in 1..15) {
+        for (i in 1..SharedPreferencesManager.getInt("loop_count")) {
             for (j in 1..6) {
                 // use skill
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(420f, 1420f, 100, 100, 1) })
@@ -247,11 +247,10 @@ class MyAccessibilityService : AccessibilityService() {
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 740f, 20, 5, 50) })
             }
             // open warrior window
-            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(175f, 1525f, 200, 500, 1) })
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(175f, 1525f, 200, 700, 1) })
 
             // slide down
-            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
-            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1050f, 355f, 1400f, 500, 500, 1) })
 
             // 1st warrior upgrade
             addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1200f, 50, 50, 5) })
@@ -267,13 +266,13 @@ class MyAccessibilityService : AccessibilityService() {
         }
 
         // prestige window
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 700, 1) })
 
         // slide down
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1050f, 355f, 1400f, 500, 500, 1) })
 
         // slide down
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1200f, 355f, 1400f, 500, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1050f, 355f, 1400f, 500, 500, 1) })
 
         // prestige
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1250f, 200, 500, 1) })
@@ -285,7 +284,7 @@ class MyAccessibilityService : AccessibilityService() {
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 1030f, 200, 1000, 1) })
 
         // prestige window
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 700, 1) })
 
         // wide window
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 885f, 200, 1000, 1) })
@@ -325,13 +324,13 @@ class MyAccessibilityService : AccessibilityService() {
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 200, 1000, 1) })
 
         // artifact window
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 700, 1) })
 
         // all artifact upgrade
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(590f, 1150f, 50, 50, 5) })
 
         // artifact window
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 300, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 700, 1) })
     }
 
     private fun addGestureToArrayList(arrList: ArrayList<() -> Unit>, gesture: () -> Unit) {
