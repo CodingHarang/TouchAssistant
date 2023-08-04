@@ -317,8 +317,8 @@ class MyAccessibilityService : AccessibilityService() {
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 1300f, 200, 500, 1) })
 
         // Mega Boost
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1430f, 200, 500, 1) })
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 1130f, 200, 500, 1) })
+//        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1430f, 200, 500, 1) })
+//        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 1130f, 200, 500, 1) })
 
         // wide window close
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 200, 1000, 1) })
