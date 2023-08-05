@@ -72,6 +72,7 @@ class MyAccessibilityService : AccessibilityService() {
 
                     val executor = newSingleThreadContext("executor")
                     executor.executor.execute {
+                        makeGestureArray()
                         while (GlobalObject.isRunning) {
                             GlobalObject.gestureArrayList[GlobalObject.loopCount]()
                             GlobalObject.loopCount++
@@ -127,7 +128,6 @@ class MyAccessibilityService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.e("onServiceConnected", "onServiceConnected")
-        makeGestureArray()
         Log.e("GestureArray", "${GlobalObject.gestureArrayList.size}")
         composeView = ComposeView(this)
         lifecycleOwner = MyLifecycleOwner()
@@ -317,8 +317,8 @@ class MyAccessibilityService : AccessibilityService() {
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(460f, 1300f, 200, 500, 1) })
 
         // Mega Boost
-//        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1430f, 200, 500, 1) })
-//        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 1130f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1430f, 200, 500, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 1130f, 200, 500, 1) })
 
         // wide window close
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 200, 1000, 1) })
