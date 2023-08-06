@@ -73,11 +73,12 @@ class MyAccessibilityService : AccessibilityService() {
                     val executor = newSingleThreadContext("executor")
                     executor.executor.execute {
                         makeGestureArray()
+                        TimeUnit.MILLISECONDS.sleep(1000)
                         while (GlobalObject.isRunning) {
                             GlobalObject.gestureArrayList[GlobalObject.loopCount]()
                             GlobalObject.loopCount++
                             if (GlobalObject.loopCount >= GlobalObject.gestureArrayList.size) {
-                                GlobalObject.loopCount = 1
+                                GlobalObject.loopCount = 0
                             }
                             GlobalObject.loopCount_flow.update { GlobalObject.loopCount }
                         }
@@ -200,7 +201,6 @@ class MyAccessibilityService : AccessibilityService() {
 //        }
 //    }
     private fun dispatchTapGesture(moveToX: Float, moveToY: Float, duration: Long, delay: Long, repeat: Long) {
-        Log.e("dispatchTapGesture", "dispatchTapGesture")
         for (i in 1..repeat) {
             if (!GlobalObject.isRunning) break
             val swipePath = Path()
@@ -229,21 +229,92 @@ class MyAccessibilityService : AccessibilityService() {
     private fun makeGestureArray() {
         GlobalObject.gestureArrayList.clear()
         for (i in 1..SharedPreferencesManager.getInt("loop_count")) {
-            for (j in 1..6) {
+            for (j in 1..5) {
+
                 // use skill
-                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(420f, 1420f, 100, 100, 1) })
-                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(535f, 1400f, 100, 100, 1) })
-                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(180f, 1400f, 100, 100, 1) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 20, 5, 2) })
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(55f, 1400f, 100, 100, 1) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(180f, 1400f, 100, 100, 1) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 20, 5, 2) })
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(300f, 1400f, 100, 100, 1) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(420f, 1420f, 100, 100, 1) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(535f, 1400f, 100, 100, 1) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 20, 5, 2) })
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(660f, 1400f, 100, 100, 1) })
 
                 // tap cycle 2 times
-                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 500f, 20, 5, 50) })
+
+
+                // royal contract
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(448f, 560f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(475f, 577f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(488f, 607f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(500f, 640f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(500f, 671f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(492f, 707f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(470f, 745f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(440f, 770f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(400f, 793f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(360f, 800f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(311f, 793f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(270f, 765f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(234f, 728f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(225f, 694f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(216f, 657f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(224f, 624f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(235f, 590f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(251f, 566f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(273f, 540f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(300f, 525f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(334f, 509f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(360f, 518f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(400f, 521f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(430f, 535f, 20, 5, 2) })
+
+                // forbidden contract
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 465f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(553f, 605f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(445f, 823f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(222f, 805f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(176f, 582f, 20, 5, 2) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(420f, 468f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(554f, 663f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(419f, 855f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(191f, 768f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(200f, 534f, 20, 5, 2) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(470f, 490f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(556f, 709f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(378f, 852f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(173f, 723f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(237f, 498f, 20, 5, 2) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(506f, 530f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(556f, 709f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(319f, 852f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(160f, 678f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(277f, 480f, 20, 5, 2) })
+
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(528f, 563f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(556f, 709f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(267f, 841f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(167f, 630f, 20, 5, 2) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(319f, 463f, 20, 5, 2) })
+
+                // fairy ok
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 1160f, 20, 5, 50) })
-                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 740f, 20, 5, 50) })
-                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 500f, 20, 5, 50) })
-                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 1160f, 20, 5, 50) })
+                addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 20, 5, 50) })
+
+                // pet center
                 addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(355f, 740f, 20, 5, 50) })
             }
             // open warrior window
@@ -262,11 +333,14 @@ class MyAccessibilityService : AccessibilityService() {
             addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1400f, 50, 50, 5) })
 
             // close warrior window
-            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(175f, 1525f, 200, 500, 1) })
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(570f, 125f, 20, 5, 2) })
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(680f, 125f, 20, 5, 2) })
+            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 50, 50, 3) })
         }
 
         // prestige window
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(50f, 1525f, 200, 700, 1) })
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(535f, 120f, 500, 500, 1) })
 
         // slide down
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchDragGesture(355f, 1050f, 355f, 1400f, 500, 500, 1) })
@@ -321,16 +395,17 @@ class MyAccessibilityService : AccessibilityService() {
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(370f, 1130f, 200, 500, 1) })
 
         // wide window close
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 50, 50, 4) })
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(575f, 130f, 200, 1000, 1) })
 
-        // artifact window
+        // open artifact window
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 700, 1) })
 
         // all artifact upgrade
         addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(590f, 1150f, 50, 50, 5) })
 
-        // artifact window
-        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(540f, 1510f, 200, 700, 1) })
+        // close artifact window
+        addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 50, 50, 3) })
     }
 
     private fun addGestureToArrayList(arrList: ArrayList<() -> Unit>, gesture: () -> Unit) {

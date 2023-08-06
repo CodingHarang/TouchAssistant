@@ -10,7 +10,7 @@ object GlobalObject {
     var isRunning = false
     val isRunning_flow = MutableStateFlow(false)
     var isPaused = false
-    var loopCount = 1
-    val loopCount_flow = MutableStateFlow(1)
+    var loopCount = 0
+    val loopCount_flow = MutableStateFlow(0)
     val gestureArrayList: ArrayList<() -> Unit> = arrayListOf()
 }

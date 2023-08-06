@@ -35,12 +35,20 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.PointerInputScope
+import androidx.compose.ui.input.pointer.changedToUpIgnoreConsumed
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
+import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
@@ -349,7 +357,8 @@ fun OverlayScreen(
         if (GlobalObject.isFullScreenShowing_flow.collectAsState().value) {
             val isDotCreated = remember { mutableStateOf(false) }
             val inputType = remember { mutableStateOf(InputType.Touch) }
-            val inputData = remember { mutableStateOf(listOf<IntOffset>()) }
+            val inputDataList = remember { mutableStateOf(listOf<IntOffset>()) }
+//            val touchPoints = remember { mutableStateListOf<Offset>() }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -360,7 +369,7 @@ fun OverlayScreen(
                                 inputType.value = InputType.Touch
                                 Log.e("tap", "x: ${it.x}\ny: ${it.y}")
 //                                updateIsFullScreen(false)
-                                inputData.value = listOf(
+                                inputDataList.value = listOf(
                                     IntOffset(
                                         it.x.toInt(),
                                         it.y.toInt()
@@ -370,6 +379,7 @@ fun OverlayScreen(
                             },
                             onDoubleTap = {
                                 Log.e("double tap", "x: ${it.x}\ny: ${it.y}")
+                                updateIsFullScreen(false)
                             },
                             onLongPress = {
                                 Log.e("long press", "x: ${it.x}\ny: ${it.y}")
@@ -384,7 +394,7 @@ fun OverlayScreen(
                             onDragStart = {
                                 isDotCreated.value = true
                                 inputType.value = InputType.Drag
-                                inputData.value = listOf(
+                                inputDataList.value = listOf(
                                     IntOffset(
                                         it.x.toInt(),
                                         it.y.toInt()
@@ -394,7 +404,7 @@ fun OverlayScreen(
                             },
                             onDrag = { change: PointerInputChange, dragAmount: Offset ->
 
-                                inputData.value = inputData.value + listOf(
+                                inputDataList.value = inputDataList.value + listOf(
                                     IntOffset(
                                         change.position.x.toInt(),
                                         change.position.y.toInt()
@@ -422,8 +432,8 @@ fun OverlayScreen(
                                 .height(40.dp)
                                 .offset {
                                     IntOffset(
-                                        (inputData.value[0].x - (this.density * 20).toInt()),
-                                        (inputData.value[0].y - (this.density * 20).toInt())
+                                        (inputDataList.value[0].x - (this.density * 20).toInt()),
+                                        (inputDataList.value[0].y - (this.density * 20).toInt())
                                     )
                                 }
                                 .clip(
@@ -435,15 +445,15 @@ fun OverlayScreen(
                                 )
                         )
                     } else {
-                        for(i in 1 until inputData.value.size) {
+                        for(i in 1 until inputDataList.value.size) {
                             Box(
                                 modifier = Modifier
                                     .width(40.dp)
                                     .height(40.dp)
                                     .offset {
                                         IntOffset(
-                                            (inputData.value[i].x - (this.density * 20).toInt()),
-                                            (inputData.value[i].y - (this.density * 20).toInt())
+                                            (inputDataList.value[i].x - (this.density * 20).toInt()),
+                                            (inputDataList.value[i].y - (this.density * 20).toInt())
                                         )
                                     }
                                     .clip(
@@ -458,6 +468,50 @@ fun OverlayScreen(
                     }
                 }
             }
+//            Canvas(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .pointerInput(true) {
+//                        collectPointerInput(touchPoints)
+//                    }
+//                    .background(
+//                        color = Color(0x55F50057)
+//                    )
+//            ) {
+//                touchPoints.forEachIndexed { index, point ->
+//                    if (index < touchPoints.size - 1) {
+//                        val nextPoint = touchPoints[index + 1]
+//                        drawLine(
+//                            start = point,
+//                            end = nextPoint,
+//                            color = Color.Red,
+//                            strokeWidth = 5f,
+//                            cap = StrokeCap.Round
+//                        )
+//                    }
+//                }
+//            }
         }
     }
 }
+
+//suspend fun PointerInputScope.collectPointerInput(touchPoints: MutableList<Offset>) {
+//    while (true) {
+//        Log.e("collectPointerInput", "collectPointerInput")
+//        val event = awaitPointerEventScope { awaitPointerEvent() }
+//        Log.e("event", "${event.changes}")
+//        val pointer = event.changes.firstOrNull()
+//        when {
+//            pointer?.pressed == true -> {
+//                touchPoints.clear()
+//                touchPoints.add(pointer.position)
+//            }
+//            pointer?.positionChanged() == true -> {
+//                touchPoints.add(pointer.position)
+//            }
+//            pointer?.changedToUpIgnoreConsumed() == true -> {
+//                // handle touch release if needed
+//            }
+//        }
+//    }
+//}
