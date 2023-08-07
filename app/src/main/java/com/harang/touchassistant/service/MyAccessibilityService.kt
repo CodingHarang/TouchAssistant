@@ -333,8 +333,8 @@ class MyAccessibilityService : AccessibilityService() {
             addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(600f, 1400f, 50, 50, 5) })
 
             // close warrior window
-            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(570f, 125f, 20, 5, 2) })
-            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(680f, 125f, 20, 5, 2) })
+//            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(570f, 125f, 20, 5, 2) })
+//            addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(680f, 125f, 20, 5, 2) })
             addGestureToArrayList(GlobalObject.gestureArrayList, { dispatchTapGesture(714f, 890f, 50, 50, 3) })
         }
 
