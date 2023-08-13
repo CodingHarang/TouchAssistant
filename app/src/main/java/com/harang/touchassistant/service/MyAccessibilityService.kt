@@ -24,6 +24,7 @@ import com.harang.touchassistant.vo.GlobalObject
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.newSingleThreadContext
+import java.util.concurrent.Executors.newSingleThreadExecutor
 import java.util.concurrent.TimeUnit
 
 
@@ -64,14 +65,13 @@ class MyAccessibilityService : AccessibilityService() {
         PixelFormat.TRANSLUCENT
     )
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event != null) {
             when (event.text.toString().replace("[", "").replace("]", "")) {
                 "Start Touch Assistant" -> {
 
-                    val executor = newSingleThreadContext("executor")
-                    executor.executor.execute {
+                    val executor = newSingleThreadExecutor()
+                    executor.execute {
                         makeGestureArray()
                         TimeUnit.MILLISECONDS.sleep(1000)
                         while (GlobalObject.isRunning) {
@@ -83,7 +83,6 @@ class MyAccessibilityService : AccessibilityService() {
                             GlobalObject.loopCount_flow.update { GlobalObject.loopCount }
                         }
                     }
-                    executor.close()
                 }
 
                 "Pause Touch Assistant" -> {
