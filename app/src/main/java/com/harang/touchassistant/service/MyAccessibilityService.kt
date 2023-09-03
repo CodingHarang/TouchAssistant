@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.newSingleThreadContext
 import java.util.concurrent.Executors.newSingleThreadExecutor
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 
 class MyAccessibilityService : AccessibilityService() {
@@ -72,9 +73,24 @@ class MyAccessibilityService : AccessibilityService() {
 
                     val executor = newSingleThreadExecutor()
                     executor.execute {
-                        makeGestureArray()
-                        TimeUnit.MILLISECONDS.sleep(1000)
+//                        makeGestureArray()
+
                         while (GlobalObject.isRunning) {
+                            TimeUnit.MILLISECONDS.sleep(Random.nextInt(500, 1001).toLong())
+                            when (Random.nextInt(0, 3)) {
+                                // 왼쪽으로 이동
+                                0 -> {
+                                    dispatchTapGesture(50f, 890f, 20, 5, 2)
+                                }
+                                // 오른쪽으로 이동
+                                1 -> {
+
+                                }
+                                // 스킬 사용
+                                3 -> {
+
+                                }
+                            }
                             GlobalObject.gestureArrayList[GlobalObject.loopCount]()
                             GlobalObject.loopCount++
                             if (GlobalObject.loopCount >= GlobalObject.gestureArrayList.size) {
@@ -84,7 +100,6 @@ class MyAccessibilityService : AccessibilityService() {
                         }
                     }
                 }
-
                 "Pause Touch Assistant" -> {
                     Log.e("Pause", "Pause")
                 }

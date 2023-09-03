@@ -40,9 +40,7 @@ import com.harang.touchassistant.view.UpButton
 import com.harang.touchassistant.vo.GlobalObject
 
 @Composable
-fun ServiceComposable(
-    foregroundStartService: (String) -> Unit,
-) {
+fun ServiceComposable() {
     val str = remember { mutableStateOf("") }
     Column(
         modifier = Modifier

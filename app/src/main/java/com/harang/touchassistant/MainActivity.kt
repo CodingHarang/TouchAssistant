@@ -88,9 +88,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        ServiceComposable(
-                            foregroundStartService = { foregroundStartService(it) }
-                        )
+                        ServiceComposable()
                     }
                 }
             }
